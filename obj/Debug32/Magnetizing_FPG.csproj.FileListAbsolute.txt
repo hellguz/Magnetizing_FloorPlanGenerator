@@ -1,0 +1,8 @@
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\bin\Magnetizing_FPG.dll
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\bin\Magnetizing_FPG.pdb
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.csprojResolveAssemblyReference.cache
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.Properties.Resources.resources
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.csproj.GenerateResource.cache
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.csproj.CoreCompileInputs.cache
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.dll
+D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\Magnetizing_FPG_revision1_20190221\FloorPlan_Generator\obj\Debug32\Magnetizing_FPG.pdb
