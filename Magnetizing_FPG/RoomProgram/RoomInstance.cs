@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Magnetizing_FPG.Properties;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using System.Linq;
 
 namespace Magnetizing_FPG
 {
@@ -22,10 +23,12 @@ namespace Magnetizing_FPG
               "RoomInstance",
              "Magnetizing_FPG", "Magnetizing_FPG")
         {
+            if (entranceIds == null)
+                entranceIds = new List<int>();
             RoomName = "Room " + RoomId.ToString();
             RoomId = maxId++;
 
-            
+            allRoomInstances.Add(this);
             m_attributes = new RoomInstanceAttributes(this);
 
             // if (m_attributes is RoomInstanceAttributes)
@@ -36,22 +39,49 @@ namespace Magnetizing_FPG
             //(m_attributes as RoomInstanceAttributes).writerTargetObjectsListString = new string[0];
         }
 
+        public class IntPair
+        {
+          public string a;
+          public string b;
+            public IntPair(string A, string B)
+            {
+                a = A;
+                b = B;
+            }
+        }
+
         public override void AddedToDocument(GH_Document document)
         {
             base.AddedToDocument(document);
         }
 
-        public int RoomArea = 20;
+        public double RoomArea = 20;
         public int RoomId;// = maxId++;
         public static int maxId = 0;
         public static List<int> entranceIds; // If there is an entrance which should be placed first, it's id will be stored here
         public string RoomName;// = "Room Name";
         public bool isHall = false; // true if the room is to be a hall (connecting-space)
         public bool hasMissingAdj = false;
+        public static List<IntPair> allAdjacencesList = new List<IntPair>();
+        public static List<RoomInstance> allRoomInstances = new List<RoomInstance>();
 
-        public List<IGH_DocumentObject> AdjacentRoomsList
+        public List<RoomInstance> AdjacentRoomsList
         {
-            get { return (m_attributes as RoomInstanceAttributes).targetObjectList; }
+            get {
+                List<RoomInstance> list = new List<RoomInstance>();
+                foreach (IntPair intPair in allAdjacencesList)
+                {
+                    if (intPair.a == this.InstanceGuid.ToString())
+                        if (OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
+                        list.Add(OnPingDocument().FindComponent(new Guid(intPair.b)) as RoomInstance);
+                    if (intPair.b == this.InstanceGuid.ToString())
+                        if (OnPingDocument().FindComponent(new Guid(intPair.a)) != null)
+                            list.Add(OnPingDocument().FindComponent(new Guid(intPair.a)) as RoomInstance);
+                }
+                list = list.Distinct().ToList();
+
+                return list;
+            }
 
         }
 
@@ -74,8 +104,7 @@ namespace Magnetizing_FPG
         {
             m_attributes = new RoomInstanceAttributes(this);
         }
-
-
+        
 
         /// <summary>
         /// This is the method that actually does the work.
@@ -126,7 +155,7 @@ namespace Magnetizing_FPG
                     List<int> copyList = RoomInstance.entranceIds.ConvertAll(i => i);
 
                     List<RoomInstance> allConnectedRooms = new List<RoomInstance>();
-                    foreach (RoomInstance room in AdjacentRoomsList)
+                    foreach (RoomInstance room in (((m_attributes as RoomInstanceAttributes).AssignedHouseInstance as HouseInstance).RoomInstances))
                         if (room != null)
                         if (room.RoomId != RoomId)
                             allConnectedRooms.Add(room);
@@ -160,7 +189,7 @@ namespace Magnetizing_FPG
             else
                 entranceIds.Remove(RoomId);
 
-            ExpireSolution(false);
+            ExpireSolution(true);
         }
 
         private void Menu_SetAsHall(object sender, EventArgs e)

@@ -55,6 +55,7 @@ namespace Magnetizing_FPG
                 "boundary, areas of rooms, starting point and so on.", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Iterations", "I", "Iterations counter. Generally value between 300-900 works best.", GH_ParamAccess.item, 3);
             pManager.AddNumberParameter("MaxAdjDistance", "MAD", "Max distance between 2 connected rooms. Generally 2-3 works best.", GH_ParamAccess.item, 2);
+            pManager.AddNumberParameter("CellSize(m)", "CS(m)", "Resolution of grid in meters, 1m is used by default", GH_ParamAccess.item, 1);
         }
 
         /// <summary>
@@ -85,10 +86,13 @@ namespace Magnetizing_FPG
             double maxAdjDistance = 0;
             int entranceIndexInRoomAreas = -1;
             HouseInstance houseInstance = new HouseInstance();
+            double oneCellSize = 1;
 
             GH_ObjectWrapper houseInstanceWrapper = new GH_ObjectWrapper();
             DA.GetData("House Instance", ref houseInstanceWrapper);
             houseInstance = houseInstanceWrapper.Value as HouseInstance;
+
+            DA.GetData("CellSize(m)", ref oneCellSize);
 
             // initialRoomsList contains all (RoomInstance) objects with their attributes.
             List<RoomInstance> initialRoomsList = houseInstance.RoomInstances;
@@ -99,6 +103,10 @@ namespace Magnetizing_FPG
             DA.SetData("Boundary", boundaryCrv);
             boundaryCrv = boundaryCrv.Offset(Plane.WorldXY, boundaryOffset, 0.001f, CurveOffsetCornerStyle.Sharp)[0];
             DA.SetData("Boundary+Offset", boundaryCrv);
+
+            
+            boundaryCrv.Scale(1 / oneCellSize);
+            houseInstance.startingPoint.Transform(Transform.Scale(new Point3d(0, 0, 0), 1 / oneCellSize));
 
             // startingPoints contains a list of Points which were provided as points for placing the first (entrance) room.
             // IMPORTANT: currently the algorithm can't work with a list of points, it uses only the first one from the list.
@@ -168,10 +176,16 @@ namespace Magnetizing_FPG
                         , new Interval(originPoint.Y + (j) * diagonal.Y / y, originPoint.Y + (j + 1) * diagonal.Y / y));
 
 
+
             if (houseInstance.tryRotateBoundary)
                 for (int i = 0; i < x; i++)
                     for (int j = 0; j < y; j++)
                         gridSurfaceArray[i + x * j].Rotate(-boundaryCurveRotationRad, Vector3d.ZAxis, rotationCenter);
+
+            for (int i = 0; i < x; i++)
+                for (int j = 0; j < y; j++)
+                    gridSurfaceArray[i + x * j].Scale(oneCellSize);
+
 
             // So the cells are rotated back again, they can be used now.
 
@@ -377,7 +391,7 @@ namespace Magnetizing_FPG
                             // This is the function which determines the position of a room and which 
                             // tries to place it. However, if the room can't be placed anywhere,
                             // the iteration stops. Then results are evaluated and the next iteration starts.
-                            if (TryPlaceNewRoomToTheGrid(ref workingGrid, initialRoomsList[roomToBePlacedNum - 1].RoomArea
+                            if (TryPlaceNewRoomToTheGrid(ref workingGrid, initialRoomsList[roomToBePlacedNum - 1].RoomArea / oneCellSize / oneCellSize 
                                 , roomToBePlacedNum, adjArray, maxAdjDistance, initialRoomsList[roomToBePlacedNum - 1].isHall))
                                 placedRoomsOrderedList.Add(roomToBePlacedNum - 1);
                             else
@@ -682,8 +696,14 @@ namespace Magnetizing_FPG
         {
             List<int> missingAdj = new List<int>();// (adjArray.GetLength(0));
             int maxRoomNum = 0;
-            for (int i = 0; i < adjArray.GetLength(0); i++)
-                maxRoomNum = Math.Max(Math.Max(maxRoomNum, adjArray[i, 0]), adjArray[i, 1]);
+            for (int i = 0; i < grid.GetLength(0); i++)
+                for (int j = 0; j < grid.GetLength(1); j++)
+                 if (grid[i,j] < 999)
+                        maxRoomNum = Math.Max(maxRoomNum, grid[i, j]);
+
+            //for (int i = 0; i < adjArray.GetLength(0); i++)
+              //  maxRoomNum = 
+                //maxRoomNum = Math.Max(Math.Max(maxRoomNum, adjArray[i, 0]), adjArray[i, 1]);
 
             for (int i = 0; i < maxRoomNum; i++)
                 missingAdj.Add(0);
@@ -695,7 +715,8 @@ namespace Magnetizing_FPG
                     for (int j = 0; j < grid.GetLength(1); j++)
                         if (grid[i, j] == adjArray[l, 0])
                             exists = true;
-                if (!exists)
+                if (!exists) 
+                    if (adjArray[l, 1] - 1 < missingAdj.Count)
                     missingAdj[adjArray[l, 1] - 1]++;
 
 
@@ -705,7 +726,8 @@ namespace Magnetizing_FPG
                         if (grid[i, j] == adjArray[l, 1])
                             exists = true;
                 if (!exists)
-                    missingAdj[adjArray[l, 0] - 1]++;
+                    if (adjArray[l, 0] - 1 < missingAdj.Count)
+                        missingAdj[adjArray[l, 0] - 1]++;
             }
 
             return missingAdj;
@@ -722,7 +744,7 @@ namespace Magnetizing_FPG
         /// <param name="maxAdjDistance"></param>
         /// <param name="isHall"></param>
         /// <returns></returns>
-        public bool TryPlaceNewRoomToTheGrid(ref int[,] grid, int area, int roomNumber, int[,] adjArray, double maxAdjDistance, bool isHall = false)
+        public bool TryPlaceNewRoomToTheGrid(ref int[,] grid, double area, int roomNumber, int[,] adjArray, double maxAdjDistance, bool isHall = false)
         {
             int[,] availableCellsGrid = new int[grid.GetLength(0), grid.GetLength(1)];  //= workingGrid;
             int[,] room = new int[50, 50];
@@ -741,10 +763,11 @@ namespace Magnetizing_FPG
             // Let's try to define proportions for the room considering its area and 
             // the requested ratio 
             double ratio = 1 + random.NextDouble() * (MaxRatio - 1);
-            double xDim_d = Math.Sqrt(area / ratio);
-            double yDim_d = ratio * Math.Sqrt(area / ratio);
+            double xDim_d = Math.Sqrt((area / ratio));
+            double yDim_d = ratio * Math.Sqrt((area / ratio));
 
             xDim = (int)Math.Round(xDim_d);
+            //yDim = (int)Math.Floor(area / (int)xDim);
             yDim = (int)Math.Round(yDim_d);
 
             if (xDim == 0)

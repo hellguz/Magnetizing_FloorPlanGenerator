@@ -32,9 +32,20 @@ namespace Magnetizing_FPG
         public List<string> adjStrList = new List<string>();
         public bool tryRotateBoundary = false;
 
+        public List<string> RoomInstancesGuids
+        {
+            get { return (m_attributes as HouseInstanceAttributes).roomInstancesGuidList; }
+            //  set { }
+        }
         public List<RoomInstance> RoomInstances
         {
-            get { return (m_attributes as HouseInstanceAttributes).roomInstancesList; }
+            get {
+                List<RoomInstance> list = new List<RoomInstance>();
+                foreach (string guid in (m_attributes as HouseInstanceAttributes).roomInstancesGuidList)
+                    if (guid != "")
+                    list.Add(OnPingDocument().FindComponent(new Guid(guid)) as RoomInstance);
+                return list;
+            }
             //  set { }
         }
 
@@ -68,6 +79,8 @@ namespace Magnetizing_FPG
         {
             adjStrList = new List<string>();
             List<string> roomNames = new List<string>();
+
+            (m_attributes as HouseInstanceAttributes).AddPrevioslyConnectedRooms();
 
             DA.GetData(0, ref boundary);
             try

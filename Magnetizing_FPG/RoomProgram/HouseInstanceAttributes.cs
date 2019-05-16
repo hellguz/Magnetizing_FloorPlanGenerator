@@ -71,7 +71,9 @@ namespace Magnetizing_FPG
         public Brush houseBrush;
 
 
-        public List<RoomInstance> roomInstancesList = new List<RoomInstance>(); // List that contains all room instances that are to be in that house
+        //public List<RoomInstance> roomInstancesList = new List<RoomInstance>(); // List that contains all room instances that are to be in that house
+
+        public List<string> roomInstancesGuidList = new List<string>();
 
 
         protected override void Layout()
@@ -81,12 +83,13 @@ namespace Magnetizing_FPG
 
             Pivot = GH_Convert.ToPoint(Pivot);
             Rectangle rec0 = GH_Convert.ToRectangle(Bounds);
-            rec0.Height += 50;
+            //rec0.Height += 50;
             Bounds = rec0;
 
-
-            HouseNameRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X - 50 + 25, (int)Bounds.Location.Y + 50), new Size(80, 20));
-            FloorNameRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X - 50 + 50, (int)Bounds.Location.Y + 75), new Size(60, 20));
+            /*
+                        HouseNameRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X - 50 + 25, (int)Bounds.Location.Y + 50), new Size(80, 20));
+                        FloorNameRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X - 50 + 50, (int)Bounds.Location.Y + 75), new Size(60, 20));
+                        */
 
             //   Bounds = new RectangleF(Pivot.X - OuterComponentRadius, Pivot.Y - OuterComponentRadius, 2 * OuterComponentRadius, 2 * OuterComponentRadius);
         }
@@ -125,9 +128,25 @@ namespace Magnetizing_FPG
             return rectOut;
         }
 
+        public void AddPrevioslyConnectedRooms()
+        {
+            if (strArray.Length > 0 && roomInstancesGuidList.Count == 0)
+            {
+                foreach (string guidS in strArray)
+                    if (guidS != "")
+                        if (Owner.OnPingDocument().FindComponent(new Guid(guidS)) != null)
+                            AddAdjacence(Owner.OnPingDocument().FindComponent(new Guid(guidS)));
+
+            }
+            UpdateRoomInstancesColors();
+        }
 
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
+
+
+
+
             //Bounds = new RectangleF(Pivot.X - OuterComponentRadius, Pivot.Y - OuterComponentRadius, 2 * OuterComponentRadius, 2 * OuterComponentRadius);
             //  Bounds = InnerComponentBounds;
             //         base.Render(canvas, graphics, channel);
@@ -157,14 +176,14 @@ namespace Magnetizing_FPG
                     //    capsule.Dispose();
 
 
-                    graphics.DrawString("A:", SystemFonts.IconTitleFont, Brushes.Black, new RectangleF(new System.Drawing.Point((int)Bounds.Location.X + 30, (int)Bounds.Location.Y + 77), new Size(20, 20)));
+                    //  graphics.DrawString("A:", SystemFonts.IconTitleFont, Brushes.Black, new RectangleF(new System.Drawing.Point((int)Bounds.Location.X + 30, (int)Bounds.Location.Y + 77), new Size(20, 20)));
 
                     HouseName = GH_Capsule.CreateTextCapsule(HouseNameRectangle, InflateRect(HouseNameRectangle, InflateAmount, InflateAmount), GH_Palette.Pink, houseInstance.HouseName);
-                    HouseName.Render(graphics, GH_Skin.palette_grey_standard);
+                    //  HouseName.Render(graphics, GH_Skin.palette_grey_standard);
                     HouseName.Dispose();
 
                     FloorName = GH_Capsule.CreateTextCapsule(FloorNameRectangle, InflateRect(FloorNameRectangle, InflateAmount, InflateAmount), GH_Palette.Pink, houseInstance.FloorName.ToString());
-                    FloorName.Render(graphics, GH_Skin.palette_white_standard);
+                    //   FloorName.Render(graphics, GH_Skin.palette_white_standard);
                     FloorName.Dispose();
 
 
@@ -209,8 +228,31 @@ namespace Magnetizing_FPG
 
         public void UpdateRoomInstancesColors()
         {
-            foreach (RoomInstance childRoom in roomInstancesList)
+            roomInstancesGuidList.RemoveAll(i => i == "");
+
+            /*    for (int i = 0; i < roomInstancesGuidList.Count; i++)
+                {
+                    try
+                    {
+                        Owner.OnPingDocument().FindComponent(new Guid(roomInstancesGuidList[i]));
+                        if (Owner.OnPingDocument().FindComponent(new Guid(roomInstancesGuidList[i])) == null)
+                        {
+                            roomInstancesGuidList.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        roomInstancesGuidList.RemoveAt(i);
+                        i--;
+                    }
+                }
+                */
+
+            foreach (string guidS in roomInstancesGuidList)
             {
+
+                RoomInstance childRoom = Owner.OnPingDocument().FindComponent(new Guid(guidS)) as RoomInstance;
                 if ((childRoom.Attributes as RoomInstanceAttributes).roomBrush != houseBrush)
                 {
                     (childRoom.Attributes as RoomInstanceAttributes).roomBrush = houseBrush;
@@ -223,22 +265,27 @@ namespace Magnetizing_FPG
 
         public void AddAdjacence(IGH_DocumentObject a)
         {
+            if (a == null) return;
 
-            if (roomInstancesList.Find(item => item.RoomId == (a as RoomInstance).RoomId) == null)
+            if (roomInstancesGuidList.Find(item => item == a.InstanceGuid.ToString()) == null)
             {
-                roomInstancesList.Add(a as RoomInstance);
+                roomInstancesGuidList.Add(a.InstanceGuid.ToString());
 
-                if (((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance != null &&
-                    ((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance != this.Owner as HouseInstance)
-                    (((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance.Attributes as HouseInstanceAttributes).RemoveAdjacence(a as RoomInstance);
+                if (((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance != null)
+                    (((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance.Attributes as HouseInstanceAttributes).RemoveAdjacence(a);
 
-                if (((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance != this.Owner as HouseInstance)
-                    ((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance = this.Owner as HouseInstance;
+                ((a as RoomInstance).Attributes as RoomInstanceAttributes).AssignedHouseInstance = Owner as HouseInstance;
 
+                foreach (RoomInstance.IntPair intPair in RoomInstance.allAdjacencesList)
+                {
+                    if (intPair.a == a.InstanceGuid.ToString() && roomInstancesGuidList.FindIndex(i => i == intPair.b) < 0)
+                        if (Owner.OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
+                            AddAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.b)));
 
-                foreach (RoomInstance childRoom in (a as RoomInstance).AdjacentRoomsList)
-                    if (roomInstancesList.Find(item => item.RoomId == childRoom.RoomId) == null)
-                        this.AddAdjacence(childRoom);
+                    if (intPair.b == a.InstanceGuid.ToString() && roomInstancesGuidList.FindIndex(i => i == intPair.a) < 0)
+                        if (Owner.OnPingDocument().FindComponent(new Guid(intPair.a)) != null)
+                            AddAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.a)));
+                }
             }
 
             UpdateRoomInstancesColors();
@@ -248,23 +295,32 @@ namespace Magnetizing_FPG
         // Removes the RoomInstance and all connected to it RoomInstances
         public void RemoveAdjacence(IGH_DocumentObject a)
         {
-            roomInstancesList.Remove(a as RoomInstance);
-            ((a as RoomInstance).Attributes as RoomInstanceAttributes).roomBrush = Brushes.Gray;
-            a.OnDisplayExpired(true);
+            if (a == null) return;
 
-            foreach (RoomInstance childRoom in (a as RoomInstance).AdjacentRoomsList)
-                if (roomInstancesList.Find(item => item.RoomId == childRoom.RoomId) != null)
-                    RemoveAdjacence(childRoom);
+            if (roomInstancesGuidList.RemoveAll(i => i == a.InstanceGuid.ToString()) > 0)
+            {
 
-            //  throw new NotImplementedException();
+                ((a as RoomInstance).Attributes as RoomInstanceAttributes).roomBrush = Brushes.Gray;
+                a.OnDisplayExpired(true);
+
+                foreach (RoomInstance.IntPair intPair in RoomInstance.allAdjacencesList)
+                {
+                    if (intPair.a == a.InstanceGuid.ToString())
+                        if (Owner.OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
+                            RemoveAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.b)));
+
+                    if (intPair.b == a.InstanceGuid.ToString())
+                        if (Owner.OnPingDocument().FindComponent(new Guid(intPair.a)) != null)
+                            RemoveAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.a)));
+                }
+            }
         }
 
         public override bool Write(GH_IO.Serialization.GH_IWriter writer)
         {
             string roomInstancesListString = "";
-            foreach (RoomInstance room in roomInstancesList)
-                roomInstancesListString += ((int)(room.Attributes.Pivot.X + room.Attributes.Bounds.Width / 2)).ToString() + "!" +
-                    ((int)(room.Attributes.Pivot.Y + room.Attributes.Bounds.Height / 2)).ToString() + "@";
+            foreach (string guid in roomInstancesGuidList)
+                roomInstancesListString += guid + "@";
 
             if (roomInstancesListString.Length > 0)
                 roomInstancesListString.Remove(roomInstancesListString.Length - 1);
@@ -276,18 +332,13 @@ namespace Magnetizing_FPG
 
             return base.Write(writer);
         }
+        string[] strArray;
         public override bool Read(GH_IO.Serialization.GH_IReader reader)
         {
             string roomInstancesListString = reader.GetString("RoomInstancesListString");
-            string[] strArray = roomInstancesListString.Split('@');
+            strArray = roomInstancesListString.Split('@');
 
-            foreach (string guidS in strArray) try
-                {
-                    roomInstancesList.Add(Owner.OnPingDocument().FindComponent(
-                        new System.Drawing.Point(int.Parse(guidS.Split('!')[0]), int.Parse(guidS.Split('!')[1]))) as RoomInstance);
-                }
-                catch (Exception) { }
-            //  roomInstancesListString.Remove(roomInstancesListString.Length - 1);
+
 
             (Owner as HouseInstance).HouseName = reader.GetString("HouseName");
             (Owner as HouseInstance).FloorName = reader.GetString("FloorName");
@@ -295,6 +346,7 @@ namespace Magnetizing_FPG
 
             Owner.ExpireSolution(false);
 
+            UpdateRoomInstancesColors();
             return base.Read(reader);
         }
 

@@ -9,6 +9,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
+using System.Linq;
 
 namespace Magnetizing_FPG
 {
@@ -40,7 +41,7 @@ namespace Magnetizing_FPG
 
         public GH_Capsule RoomArea;
         public GH_Capsule RoomName;
-                                   
+
 
         Rectangle RoomAreaRectangle;
         Rectangle RoomNameRectangle;
@@ -119,32 +120,70 @@ namespace Magnetizing_FPG
                     RoomArea = GH_Capsule.CreateTextCapsule(RoomAreaRectangle, InflateRect(RoomAreaRectangle, InflateAmount, InflateAmount), GH_Palette.Pink, roomInstance.RoomArea.ToString());
                     RoomArea.Render(graphics, GH_Skin.palette_white_standard);
                     RoomArea.Dispose();
-                }
-                else
-                {
-                    base.Render(canvas, graphics, channel);
 
-                    foreach (IGH_DocumentObject obj in targetObjectList)
-                    {
-                        if (obj != null)
-                            DrawTargetArrow(graphics, obj.Attributes.Bounds);
-                    }
 
-                }
-
-            if (writerTargetObjectsListString.Length > 0 && targetObjectList.Count == 0)
-            {
-                if (writerTargetObjectsListString.Length > 0)
-                    foreach (string guidS in writerTargetObjectsListString)
-                    {
+                    for (int i = 0; i < RoomInstance.allAdjacencesList.Count; i++)
                         try
                         {
-                            targetObjectList.Add(Owner.OnPingDocument().FindComponent(
-                                new System.Drawing.Point(int.Parse(guidS.Split('!')[0]), int.Parse(guidS.Split('!')[1]))) as RoomInstance);
+                            Owner.OnPingDocument().FindComponent(new Guid(RoomInstance.allAdjacencesList[i].b));
+                            Owner.OnPingDocument().FindComponent(new Guid(RoomInstance.allAdjacencesList[i].a));
+
+                            if (Owner.OnPingDocument().FindComponent(new Guid(RoomInstance.allAdjacencesList[i].b)) == null ||
+                                Owner.OnPingDocument().FindComponent(new Guid(RoomInstance.allAdjacencesList[i].a)) == null)
+                            {
+                                RoomInstance.allAdjacencesList.RemoveAt(i); i--;
+                            }
                         }
-                        catch (Exception) { }
+                        catch (Exception) { RoomInstance.allAdjacencesList.RemoveAt(i); i--; }
+
+
+                    foreach (RoomInstance.IntPair intPair in RoomInstance.allAdjacencesList)
+                    {
+                        if (intPair.a == this.Owner.InstanceGuid.ToString())
+                            try
+                            {
+                                if (Owner.OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
+                                    DrawTargetArrow(graphics, Owner.OnPingDocument().FindComponent(new Guid(intPair.b)).Attributes.Bounds);
+                            }
+                            catch (Exception) { }
+                        if (intPair.b == this.Owner.InstanceGuid.ToString())
+                            try
+                            {
+                                if (Owner.OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
+                                    DrawTargetArrow(graphics, Owner.OnPingDocument().FindComponent(new Guid(intPair.a)).Attributes.Bounds);
+                            }
+                            catch (Exception) { }
                     }
-            }
+
+                    // if (obj != null)
+                    //     DrawTargetArrow(graphics, obj.Attributes.Bounds);
+
+
+                } else
+                {
+                    base.Render(canvas, graphics, channel);
+                }
+        
+            if (RoomInstance.allAdjacencesList == null || RoomInstance.allAdjacencesList.Count == 0)
+
+                if (writerTargetObjectsListString.Length > 0)// && targetObjectList.Count == 0)
+                {
+                    if (writerTargetObjectsListString.Length > 0)
+                        foreach (string guidS in writerTargetObjectsListString)
+                        {
+                            try
+                            {
+                                RoomInstance.allAdjacencesList.Add(new RoomInstance.IntPair(guidS.Split('%')[0], guidS.Split('%')[1]));
+                                //   Owner.OnPingDocument().FindComponent(new Guid(guidS.Split('!')[0]))
+
+                                /*  if (!targetObjectList.Contains(Owner.OnPingDocument().FindComponent(
+                                      new System.Drawing.Point(int.Parse(guidS.Split('!')[0]), int.Parse(guidS.Split('!')[1]))) as RoomInstance))
+                                      targetObjectList.Add(Owner.OnPingDocument().FindComponent(
+                                          new System.Drawing.Point(int.Parse(guidS.Split('!')[0]), int.Parse(guidS.Split('!')[1]))) as RoomInstance);*/
+                            }
+                            catch (Exception) { }
+                        }
+                }
 
         }
 
@@ -245,24 +284,32 @@ namespace Magnetizing_FPG
                             Owner.RecordUndoEvent("Add Modifier");
                             if (att.DocObject is RoomInstance)
                             {
-                                if ((att.DocObject as RoomInstance).RoomId != (DocObject as RoomInstance).RoomId)
+                                if ((att.DocObject as RoomInstance).InstanceGuid != (DocObject as RoomInstance).InstanceGuid)
                                 {
-                                    if (targetObjectList.Find(item => (item as RoomInstance).RoomId == (att.DocObject as RoomInstance).RoomId) == null)
+                                    if (RoomInstance.allAdjacencesList.Find(i => i.a == att.DocObject.InstanceGuid.ToString() && i.b == DocObject.InstanceGuid.ToString()) == null &&
+                                        RoomInstance.allAdjacencesList.Find(i => i.b == att.DocObject.InstanceGuid.ToString() && i.a == DocObject.InstanceGuid.ToString()) == null)
                                     {
                                         AddAdjacence(att.DocObject);
                                         target.AddAdjacence(this.DocObject as IGH_DocumentObject);
                                     }
+                                    /*
+                                    if (targetObjectList.Find(item => (item as RoomInstance).RoomId == (att.DocObject as RoomInstance).RoomId) == null)
+                                    {
+                                        AddAdjacence(att.DocObject);
+                                        target.AddAdjacence(this.DocObject as IGH_DocumentObject);
+                                    }*/
                                     else
                                     {
                                         RemoveAdjacence(att.DocObject);
                                         target.RemoveAdjacence(this.DocObject as IGH_DocumentObject);
                                     }
 
+                                    RoomInstance.allAdjacencesList = RoomInstance.allAdjacencesList.Distinct().ToList();
                                 }
                             }
                             else if (att.DocObject is HouseInstance houseInstance)
                             {
-                                if ((att as HouseInstanceAttributes).roomInstancesList.Find(item => item.RoomId == (this.DocObject as RoomInstance).RoomId) == null)
+                                if ((att as HouseInstanceAttributes).roomInstancesGuidList.Find(item => item == (this.DocObject as RoomInstance).InstanceGuid.ToString()) == null)
                                     target.AddAdjacence(this.DocObject as IGH_DocumentObject);
                                 else
                                 {
@@ -328,7 +375,15 @@ namespace Magnetizing_FPG
 
         public void AddAdjacence(IGH_DocumentObject a)
         {
-            targetObjectList.Add(a);
+            // int t = String.Compare(a.InstanceGuid.ToString(), this.Owner.InstanceGuid.ToString());
+            // if (t >= 0)
+            RoomInstance.allAdjacencesList.Add(new RoomInstance.IntPair(a.InstanceGuid.ToString(), this.Owner.InstanceGuid.ToString()));
+            //  else
+            RoomInstance.allAdjacencesList.Add(new RoomInstance.IntPair(this.Owner.InstanceGuid.ToString(), a.InstanceGuid.ToString()));
+
+            //  if (!targetObjectList.Contains(a))
+            //      targetObjectList.Add(a);
+
             if (AssignedHouseInstance != null)
                 (AssignedHouseInstance.Attributes as HouseInstanceAttributes).AddAdjacence(a);
             else if ((a.Attributes as RoomInstanceAttributes).AssignedHouseInstance != null)
@@ -337,9 +392,16 @@ namespace Magnetizing_FPG
 
         public void RemoveAdjacence(IGH_DocumentObject a)
         {
-            targetObjectList.Remove(a);
-            if (AssignedHouseInstance != null)
-                (AssignedHouseInstance.Attributes as HouseInstanceAttributes).RemoveAdjacence(a);
+            RoomInstance.allAdjacencesList.RemoveAll(i => i.a == Owner.InstanceGuid.ToString() && i.b == a.InstanceGuid.ToString());
+            RoomInstance.allAdjacencesList.RemoveAll(i => i.b == Owner.InstanceGuid.ToString() && i.a == a.InstanceGuid.ToString());
+
+
+            //  while (targetObjectList.Contains(a))
+            //   {
+            //       targetObjectList.Remove(a);
+            //  }
+
+
 
         }
 
@@ -347,11 +409,14 @@ namespace Magnetizing_FPG
         public override bool Write(GH_IO.Serialization.GH_IWriter writer)
         {
             string roomInstancesListString = "";
-            foreach (RoomInstance room in targetObjectList)
-                if (room != null)
-                    roomInstancesListString += ((int)(room.Attributes.Pivot.X)).ToString() + "!" +
-                    ((int)(room.Attributes.Pivot.Y)).ToString() + "@";
+            foreach (RoomInstance.IntPair intPair in RoomInstance.allAdjacencesList)
+                roomInstancesListString += intPair.a + "%" + intPair.b + "@";
 
+            /*   foreach (RoomInstance room in targetObjectList)
+                   if (room != null)
+                       roomInstancesListString += ((int)(room.Attributes.Pivot.X)).ToString() + "!" +
+                       ((int)(room.Attributes.Pivot.Y)).ToString() + "@";
+   */
             if (roomInstancesListString.Length > 0)
                 roomInstancesListString = roomInstancesListString.Remove(roomInstancesListString.Length - 1);
 
@@ -359,6 +424,8 @@ namespace Magnetizing_FPG
             writer.SetString("RoomName", (Owner as RoomInstance).RoomName);
             //    writer.SetInt32("RoomId", (int)(Owner as RoomInstance).RoomId);
             writer.SetDouble("RoomArea", (Owner as RoomInstance).RoomArea);
+
+            writer.SetBoolean("isHall", (Owner as RoomInstance).isHall);
 
             string temp = "";
             foreach (int a in RoomInstance.entranceIds)
@@ -382,6 +449,12 @@ namespace Magnetizing_FPG
             (Owner as RoomInstance).RoomName = reader.GetString("RoomName");//, (Owner as RoomInstance).RoomName);
                                                                             //    (Owner as RoomInstance).RoomId = (uint)reader.GetInt32("RoomId");//, (int)(Owner as RoomInstance).RoomId);
             (Owner as RoomInstance).RoomArea = (int)Math.Floor(reader.GetDouble("RoomArea"));//, (Owner as RoomInstance).RoomArea);
+
+            try
+            {
+                (Owner as RoomInstance).isHall = reader.GetBoolean("isHall");
+            }
+            catch (Exception e) { }
 
             RoomInstance.entranceIds = new List<int>();
             string temp = "";
