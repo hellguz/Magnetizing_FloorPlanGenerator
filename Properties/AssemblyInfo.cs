@@ -7,13 +7,13 @@ using Rhino.PlugIns;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Magnetizing_FPG")]
-[assembly: AssemblyDescription("For questions contact hellguz@gmail.com")]
+[assembly: AssemblyTitle("FloorPlan_Generator_1")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Egor Gavrilov")]
-[assembly: AssemblyProduct("Magnetizing_FPG")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("FloorPlan_Generator_1")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("Magnetizing_FPG")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

@@ -26,7 +26,7 @@ namespace RAYONCHIK.GORODOK.TransportNetwork.TensorFields
         public GHcTensorFields_2()
           : base("Tensor Fields 3", "Tensor Fields 3",
               "Tensor Fields 3",
-              "Magnetizing_FPG", "Study_6")
+              "FloorPlanGen", "Study_6")
         {
         }
 
@@ -65,6 +65,7 @@ namespace RAYONCHIK.GORODOK.TransportNetwork.TensorFields
             List<Point3d> iPoints = new List<Point3d>();
             GridVectors = new List<Vector3d>();
             roadDensity = 0;
+            double blockWidth = 0;
             List<Curve> outputCurves = new List<Curve>();
 
             DA.GetDataList(0, iPoints);
