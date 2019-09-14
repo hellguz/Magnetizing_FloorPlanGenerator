@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Magnetizing_FPG
+namespace FloorPlan_Generator
 {
     public class GenerateCorridorsInBetween : GH_Component
     {
@@ -14,7 +14,7 @@ namespace Magnetizing_FPG
         public GenerateCorridorsInBetween()
           : base("GenerateCorridorsInBetween", "GenerateCorridorsInBetween",
               "GenerateCorridorsInBetween",
-              "Magnetizing_FPG", "Study_5")
+              "FloorPlanGen", "Study_5")
         {
         }
 

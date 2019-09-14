@@ -5,7 +5,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Rhino.Collections;
 
-namespace Magnetizing_FPG
+namespace FloorPlan_Generator
 {
 
     public class PointCloudStructure
@@ -41,7 +41,7 @@ namespace Magnetizing_FPG
         public GHcTensorFields_Quad()
           : base("Tensor Fields QUad", "Tensor Fields QUad",
               "Tensor Fields QUad",
-              "Magnetizing_FPG", "Study_6")
+              "FloorPlanGen", "Study_6")
         {
         }
 
@@ -80,6 +80,7 @@ namespace Magnetizing_FPG
             List<Point3d> iPoints = new List<Point3d>();
             GridVectors = new List<Vector3d>();
             roadDensity = 0;
+            double blockWidth = 0;
             List<Curve> outputCurves = new List<Curve>();
             pointCloudStructureList = new List<PointCloudStructure>();
 
