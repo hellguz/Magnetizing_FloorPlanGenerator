@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FloorPlan_Generator.Properties {
+namespace Magnetizing_FPG.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FloorPlan_Generator.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FloorPlan_Generator.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Magnetizing_FPG.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -86,6 +86,16 @@ namespace FloorPlan_Generator.Properties {
         internal static System.Drawing.Bitmap RoomInstanceIcon {
             get {
                 object obj = ResourceManager.GetObject("RoomInstanceIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SpringSystem_ESIcon {
+            get {
+                object obj = ResourceManager.GetObject("SpringSystem_ESIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

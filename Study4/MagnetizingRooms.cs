@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Attributes;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
-namespace FloorPlan_Generator
+namespace Magnetizing_FPG
 {
     public class MagnetizingRooms : GH_Component
     {
@@ -34,7 +34,7 @@ namespace FloorPlan_Generator
         public MagnetizingRooms()
           : base("MagnetizingRooms", "MagnetizingRooms",
               "MagnetizingRooms",
-              "FloorPlanGen", "Study_4")
+              "Magnetizing_FPG", "Study_4")
         {
         }
 

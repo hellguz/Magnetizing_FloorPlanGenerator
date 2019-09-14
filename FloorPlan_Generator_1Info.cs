@@ -2,15 +2,15 @@
 using System.Drawing;
 using Grasshopper.Kernel;
 
-namespace FloorPlan_Generator
+namespace Magnetizing_FPG
 {
-    public class FloorPlan_Generator_1Info : GH_AssemblyInfo
+    public class Magnetizing_FPGInfo : GH_AssemblyInfo
     {
         public override string Name
         {
             get
             {
-                return "FloorPlanGenerator";
+                return "Magnetizing_FPG";
             }
         }
         public override Bitmap Icon
