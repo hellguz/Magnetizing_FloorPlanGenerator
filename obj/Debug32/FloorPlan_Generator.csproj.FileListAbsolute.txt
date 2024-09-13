@@ -1,8 +1,0 @@
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\bin\FloorPlan_Generator.dll
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\bin\FloorPlan_Generator.pdb
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.csprojResolveAssemblyReference.cache
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.Properties.Resources.resources
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.csproj.GenerateResource.cache
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.csproj.CoreCompileInputs.cache
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.dll
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator\FloorPlan_Generator\obj\Debug32\FloorPlan_Generator.pdb

@@ -1,6 +1,0 @@
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\bin\Debug\clipper_library.dll
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\bin\Debug\clipper_library.pdb
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\obj\Debug\clipper_library.csprojResolveAssemblyReference.cache
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\obj\Debug\clipper_library.csproj.CoreCompileInputs.cache
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\obj\Debug\clipper_library.dll
-D:\Dropbox\Projects\20180907_DIPLOMA\Studies\Study 2 (FloorPlan_Generator_GH)\FloorPlan_Generator_1\FloorPlan_Generator_1\clipper_library\obj\Debug\clipper_library.pdb

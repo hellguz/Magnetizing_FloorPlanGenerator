@@ -55,7 +55,7 @@ namespace Magnetizing_FPG
             base.AddedToDocument(document);
         }
 
-        public double RoomArea = 20;
+        public double RoomArea = 40;
         public int RoomId;// = maxId++;
         public static int maxId = 0;
         public static List<int> entranceIds; // If there is an entrance which should be placed first, it's id will be stored here

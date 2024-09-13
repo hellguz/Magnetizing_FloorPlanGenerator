@@ -16,43 +16,34 @@ namespace Magnetizing_FPG
         {
             random = new Random(Guid.NewGuid().GetHashCode());
             houseBrush = PickBrush();
-
+            roomInstancesGuidList = new List<string>();
         }
 
         private Brush PickBrush()
         {
-            List<Brush> brushes = new List<Brush>();
+            List<Brush> brushes = new List<Brush>
+            {
+                Brushes.Aqua,
+                Brushes.Bisque,
+                Brushes.BlanchedAlmond,
+                Brushes.DarkViolet,
+                Brushes.LemonChiffon,
+                Brushes.LightBlue,
+                Brushes.LightCyan,
+                Brushes.LightGreen,
+                Brushes.LightSkyBlue,
+                Brushes.Olive,
+                Brushes.Orange,
+                Brushes.PaleGreen,
+                Brushes.Peru,
+                Brushes.PeachPuff,
+                Brushes.Purple,
+                Brushes.Salmon,
+                Brushes.SlateBlue,
+                Brushes.Yellow,
+                Brushes.YellowGreen
+            };
 
-            brushes.Add(Brushes.Aqua);
-            brushes.Add(Brushes.Bisque);
-            brushes.Add(Brushes.BlanchedAlmond);
-            brushes.Add(Brushes.DarkViolet);
-            brushes.Add(Brushes.LemonChiffon);
-            brushes.Add(Brushes.LightBlue);
-            brushes.Add(Brushes.LightCyan);
-            brushes.Add(Brushes.LightGreen);
-            brushes.Add(Brushes.LightSkyBlue);
-            brushes.Add(Brushes.Olive);
-            brushes.Add(Brushes.Orange);
-            brushes.Add(Brushes.PaleGreen);
-            brushes.Add(Brushes.Peru);
-            brushes.Add(Brushes.PeachPuff);
-            brushes.Add(Brushes.Purple);
-            brushes.Add(Brushes.Salmon);
-            brushes.Add(Brushes.SlateBlue);
-            brushes.Add(Brushes.Yellow);
-            brushes.Add(Brushes.YellowGreen);
-
-            /*Brush result = Brushes.Transparent;
-
-            Random rnd = new Random();
-
-            Type brushesType = typeof(Brushes);
-
-            PropertyInfo[] properties = brushesType.GetProperties();
-
-            int random = rnd.Next(properties.Length);
-            result = (Brush)properties[random].GetValue(null, null);*/
 
             return brushes[random.Next(brushes.Count)];
         }
@@ -117,10 +108,6 @@ namespace Magnetizing_FPG
             }
         }
 
-        /*  public override bool IsPickRegion(PointF point)
-          {
-              return Grasshopper.GUI.GH_GraphicsUtil.IsPointInEllipse(Bounds, point);
-          }*/
         protected Rectangle InflateRect(Rectangle rect, int a = 5, int b = 5)
         {
             Rectangle rectOut = rect;
@@ -130,6 +117,8 @@ namespace Magnetizing_FPG
 
         public void AddPrevioslyConnectedRooms()
         {
+            if (strArray == null)
+                return;
             if (strArray.Length > 0 && roomInstancesGuidList.Count == 0)
             {
                 foreach (string guidS in strArray)
@@ -143,9 +132,6 @@ namespace Magnetizing_FPG
 
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
-
-
-
 
             //Bounds = new RectangleF(Pivot.X - OuterComponentRadius, Pivot.Y - OuterComponentRadius, 2 * OuterComponentRadius, 2 * OuterComponentRadius);
             //  Bounds = InnerComponentBounds;

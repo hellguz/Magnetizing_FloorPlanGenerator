@@ -22,6 +22,9 @@ namespace Magnetizing_FPG
               "HouseInstance",
              "Magnetizing_FPG", "Magnetizing_FPG")
         {
+            adjStrList = new List<string>();
+            m_attributes = new HouseInstanceAttributes(this);
+
         }
 
         public string HouseName = "HouseName";

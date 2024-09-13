@@ -48,7 +48,6 @@ namespace Magnetizing_FPG
         Rectangle RoomIdRectangle;
 
         bool haveReadTargetObjectsList = false;
-
         public Brush roomBrush;
 
         const int InflateAmount = 2; // Used to inflate all rectangles for producing outer rectangles for GH_TextCapsules
@@ -58,7 +57,6 @@ namespace Magnetizing_FPG
         public string[] writerTargetObjectsListString = new string[0];
 
         public HouseInstance AssignedHouseInstance;
-
 
         public List<IGH_DocumentObject> targetObjectList = new List<IGH_DocumentObject>();
 
@@ -106,11 +104,11 @@ namespace Magnetizing_FPG
                     RoomAreaRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X + 65, (int)Bounds.Location.Y + 80), new Size(57, 20));
                     RoomIdRectangle = new Rectangle(new System.Drawing.Point((int)Bounds.Location.X + 35, (int)Bounds.Location.Y + 105), new Size(80, 40));
 
-                    graphics.DrawString("m² :", SystemFonts.IconTitleFont, Brushes.Black, new RectangleF(new System.Drawing.Point((int)Bounds.Location.X + 35, (int)Bounds.Location.Y + 81), new Size(30, 20)));
+                    graphics.DrawString("m² :", new Font(FontFamily.GenericSansSerif, 6f, FontStyle.Regular), Brushes.Black, new RectangleF(new System.Drawing.Point((int)Bounds.Location.X + 35, (int)Bounds.Location.Y + 81), new Size(30, 20)));
                     if (!RoomInstance.entranceIds.Contains(roomInstance.RoomId))
-                        graphics.DrawString("ID: " + roomInstance.RoomId, new Font(FontFamily.GenericSansSerif, 6f, FontStyle.Regular), Brushes.Black, RoomIdRectangle, new StringFormat() { Alignment = StringAlignment.Center });
+                        graphics.DrawString("ID: " + roomInstance.RoomId, new Font(FontFamily.GenericSansSerif, 4f, FontStyle.Regular), Brushes.Black, RoomIdRectangle, new StringFormat() { Alignment = StringAlignment.Center });
                     else
-                        graphics.DrawString("ID: " + roomInstance.RoomId + "\n(entrance)", new Font(FontFamily.GenericSansSerif, 6f, FontStyle.Bold), Brushes.Black, RoomIdRectangle, new StringFormat() { Alignment = StringAlignment.Center });
+                        graphics.DrawString("ID: " + roomInstance.RoomId + "\n(entrance)", new Font(FontFamily.GenericSansSerif, 4f, FontStyle.Bold), Brushes.Black, RoomIdRectangle, new StringFormat() { Alignment = StringAlignment.Center });
 
 
                     RoomName = GH_Capsule.CreateTextCapsule(RoomNameRectangle, InflateRect(RoomNameRectangle, InflateAmount, InflateAmount), GH_Palette.Pink, roomInstance.RoomName);
@@ -159,13 +157,13 @@ namespace Magnetizing_FPG
                     //     DrawTargetArrow(graphics, obj.Attributes.Bounds);
 
 
-                } else
+                }
+                else
                 {
                     base.Render(canvas, graphics, channel);
                 }
-        
-            if (RoomInstance.allAdjacencesList == null || RoomInstance.allAdjacencesList.Count == 0)
 
+            if (RoomInstance.allAdjacencesList == null || RoomInstance.allAdjacencesList.Count == 0)
                 if (writerTargetObjectsListString.Length > 0)// && targetObjectList.Count == 0)
                 {
                     if (writerTargetObjectsListString.Length > 0)
@@ -247,26 +245,25 @@ namespace Magnetizing_FPG
         }
         public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, Grasshopper.GUI.GH_CanvasMouseEvent e)
         {
-            if (_drawing)
+            if (!_drawing)
+                return base.RespondToMouseMove(sender, e);
+
+            _drawingBox = new RectangleF(e.CanvasLocation, new SizeF(0, 0));
+
+            GH_Document doc = sender.Document;
+            if (doc != null)
             {
-                _drawingBox = new RectangleF(e.CanvasLocation, new SizeF(0, 0));
-
-                GH_Document doc = sender.Document;
-                if (doc != null)
+                IGH_Attributes att = doc.FindAttribute(e.CanvasLocation, true);
+                if (att != null)
                 {
-                    IGH_Attributes att = doc.FindAttribute(e.CanvasLocation, true);
-                    if (att != null)
-                    {
-                        if (att is IRoomStructure<IGH_DocumentObject>)
-                            _drawingBox = att.Bounds;
-                    }
+                    if (att is IRoomStructure<IGH_DocumentObject>)
+                        _drawingBox = att.Bounds;
                 }
-                sender.Invalidate();
-                return GH_ObjectResponse.Handled;
             }
-
-            return base.RespondToMouseMove(sender, e);
+            sender.Invalidate();
+            return GH_ObjectResponse.Handled;
         }
+
         public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, Grasshopper.GUI.GH_CanvasMouseEvent e)
         {
             if (_drawing)

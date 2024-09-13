@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG", "Magnetizing_FPG.csproj", "{F5F278EA-405F-40D9-9A0D-00C1854F8D43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug32|Any CPU = Debug32|Any CPU
+		Debug64|Any CPU = Debug64|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Debug32|Any CPU.ActiveCfg = Debug32|Any CPU
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Debug32|Any CPU.Build.0 = Debug32|Any CPU
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Debug64|Any CPU.ActiveCfg = Debug64|Any CPU
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Debug64|Any CPU.Build.0 = Debug64|Any CPU
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F278EA-405F-40D9-9A0D-00C1854F8D43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4F8FF12-2464-4D9F-A076-1ED10B7C4601}
+	EndGlobalSection
+EndGlobal
