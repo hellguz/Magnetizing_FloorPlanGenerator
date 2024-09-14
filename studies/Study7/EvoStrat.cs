@@ -999,7 +999,7 @@ namespace FloorPlan_Generator
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("{7b02cbd7-910f-47cf-9601-348f8d999506}"); }
+            get { return new Guid("{7b02cbd7-910f-47cf-9601-128a8d999506}"); }
         }
     }
 }

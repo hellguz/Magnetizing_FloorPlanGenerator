@@ -972,7 +972,7 @@ namespace Magnetizing_FPG
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("{7b02cbd7-910f-47cf-9601-348f8d999506}"); }
+            get { return new Guid("{7b02cbd7-910f-47cf-9601-348f8a214506}"); }
         }
     }
 }

@@ -13,10 +13,12 @@ namespace Magnetizing_FPG
     {
 
         public HouseInstanceAttributes(HouseInstance param) : base(param)
-        {
+        {            
             random = new Random(Guid.NewGuid().GetHashCode());
             houseBrush = PickBrush();
             roomInstancesGuidList = new List<string>();
+            strArray = new string[] { };
+
         }
 
         private Brush PickBrush()
@@ -292,11 +294,13 @@ namespace Magnetizing_FPG
                 foreach (RoomInstance.IntPair intPair in RoomInstance.allAdjacencesList)
                 {
                     if (intPair.a == a.InstanceGuid.ToString())
+                        if (Owner.OnPingDocument() != null)
                         if (Owner.OnPingDocument().FindComponent(new Guid(intPair.b)) != null)
                             RemoveAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.b)));
 
                     if (intPair.b == a.InstanceGuid.ToString())
-                        if (Owner.OnPingDocument().FindComponent(new Guid(intPair.a)) != null)
+                        if (Owner.OnPingDocument() != null)
+                            if (Owner.OnPingDocument().FindComponent(new Guid(intPair.a)) != null)
                             RemoveAdjacence(Owner.OnPingDocument().FindComponent(new Guid(intPair.a)));
                 }
             }

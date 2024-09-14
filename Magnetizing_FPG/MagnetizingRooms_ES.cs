@@ -442,7 +442,8 @@ namespace Magnetizing_FPG
             // the list that contains all values from bestGrid, but in linear array.
             List<int> bestGridLinear = new List<int>();
 
-            List<int> placedRoomsNums = new List<int>();
+            HashSet<int> placedRoomsNums = new HashSet<int>();
+
             // Remove all '9999' cells, they stand for cells that are outside the curve boundary of the building
             for (int i = 0; i < x; i++)
                 for (int j = 0; j < y; j++)
@@ -456,7 +457,7 @@ namespace Magnetizing_FPG
                     if (!placedRoomsNums.Contains(bestGrid[i, j]) && bestGrid[i, j] != 0 && bestGrid[i, j] != -1 && bestGrid[i, j] != 9999)
                         placedRoomsNums.Add(bestGrid[i, j]);
                 }
-            placedRoomsNums.Sort();
+            //placedRoomsNums.Sort();
 
             // Indicate all RoomInstances that are not placed in the workingGrid on the graph in grasshopper window
             List<int> missingRoomAdj = MissingRoomAdjacences(bestGrid, adjArray);
@@ -472,20 +473,23 @@ namespace Magnetizing_FPG
                         initialRoomsList[i].hasMissingAdj = false;
                 }
 
+            List<int> placedRoomsNumsList = placedRoomsNums.ToList();
+
+
             // missingRoomAdj is not the list that we're looking for. It considers wrong list of rooms (all of them, instead of only placed ones)
             // So we have to fix it a bit
             List<int> missingRoomAdjSortedList = new List<int>();
             for (int i = 0; i < placedRoomsNums.Count; i++)
-                missingRoomAdjSortedList.Add(missingRoomAdj[placedRoomsNums[i] - 1]);
+                missingRoomAdjSortedList.Add(missingRoomAdj[placedRoomsNumsList[i] - 1]);
 
 
             List<string> roomNames = new List<string>();
-            for (int i = 0; i < placedRoomsNums.Count; i++)
+            for (int i = 0; i < placedRoomsNumsList.Count; i++)
             {
-                if (!initialRoomsList[placedRoomsNums[i] - 1].isHall)
-                    roomNames.Add(initialRoomsList[placedRoomsNums[i] - 1].RoomName);
+                if (!initialRoomsList[placedRoomsNumsList[i] - 1].isHall)
+                    roomNames.Add(initialRoomsList[placedRoomsNumsList[i] - 1].RoomName);
                 else
-                    roomNames.Add("&&HALL&&" + initialRoomsList[placedRoomsNums[i] - 1].RoomName);
+                    roomNames.Add("&&HALL&&" + initialRoomsList[placedRoomsNumsList[i] - 1].RoomName);
             }
 
 
@@ -506,7 +510,7 @@ namespace Magnetizing_FPG
             {
                 List<Brep> cellsCollection = new List<Brep>();
                 for (int q = 0; q < bestGridLinear.Count; q++)
-                    if (bestGridLinear[q] == placedRoomsNums[i])
+                    if (bestGridLinear[q] == placedRoomsNumsList[i])
                         cellsCollection.Add(gridSurfaceArray[q].ToBrep());
 
                 if (Brep.JoinBreps(cellsCollection, 0.01f) != null)
@@ -530,8 +534,8 @@ namespace Magnetizing_FPG
 
             string adjacenciesOutputString = "";
             for (int i = 0; i < adjArray.GetLength(0); i++)
-                if (placedRoomsNums.Contains(adjArray[i, 0]) && placedRoomsNums.Contains(adjArray[i, 1]))
-                    adjacenciesOutputString += placedRoomsNums.IndexOf(adjArray[i, 0]) + "-" + placedRoomsNums.IndexOf(adjArray[i, 1]) + "\n";
+                if (placedRoomsNumsList.Contains(adjArray[i, 0]) && placedRoomsNumsList.Contains(adjArray[i, 1]))
+                    adjacenciesOutputString += placedRoomsNumsList.IndexOf(adjArray[i, 0]) + "-" + placedRoomsNumsList.IndexOf(adjArray[i, 1]) + "\n";
 
             DA.SetDataList("Room Breps", roomBrepsList);
             DA.SetData("Corridors", corridorsBrep);
