@@ -93,7 +93,7 @@ namespace FloorPlan_Generator.Study4
                     capsule.Render(graphics, Selected, Owner.Locked, true);
                     capsule.Dispose();
 
-                    string text = string.Format("{0:0.00}", "FUCK YOURSELF");
+                    string text = string.Format("{0:0.00}", "TEST");
                     Grasshopper.GUI.GH_GraphicsUtil.RenderCenteredText(graphics, text, GH_FontServer.Large, Color.Black, Pivot);
                     //Grasshopper.GUI.GH_GraphicsUtil.RenderObjectOverlay(graphics, , Bounds);
                     //GH_Capsule.CreateTextCapsule
