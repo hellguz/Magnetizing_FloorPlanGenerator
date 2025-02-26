@@ -85,17 +85,17 @@ namespace Magnetizing_FPG
             List<string> adjStrList = new List<string>();
             double maxAdjDistance = 0;
             int entranceIndexInRoomAreas = -1;
-            HouseInstance houseInstance = new HouseInstance();
+            IHouseInstance houseInstance = null;
             double oneCellSize = 1;
 
             GH_ObjectWrapper houseInstanceWrapper = new GH_ObjectWrapper();
             DA.GetData("House Instance", ref houseInstanceWrapper);
-            houseInstance = houseInstanceWrapper.Value as HouseInstance;
+            houseInstance = houseInstanceWrapper.Value as IHouseInstance;
 
             DA.GetData("CellSize(m)", ref oneCellSize);
 
             // initialRoomsList contains all (RoomInstance) objects with their attributes.
-            List<RoomInstance> initialRoomsList = houseInstance.RoomInstances;
+            List<IRoomInstance> initialRoomsList = houseInstance.RoomInstances;
             Curve boundaryCrv = houseInstance.boundary;
             int[,] adjArray = houseInstance.adjArray;
             adjStrList = houseInstance.adjStrList;
@@ -304,7 +304,7 @@ namespace Magnetizing_FPG
                         placedEntranceRoom = false;
 
                         roomCellsList.Clear();
-                        foreach (RoomInstance room in initialRoomsList)
+                        foreach (IRoomInstance room in initialRoomsList)
                             roomCellsList.Add(new RoomCells());
                     }
 

@@ -26,7 +26,7 @@ namespace Magnetizing_FPG
 
         ToolStripMenuItem DropDown_OneSideCor;
         ToolStripMenuItem DropDown_TwoSidesCor;
-        ToolStripMenuItem DropDown_AllSidesCor;
+        ToolStripMenuItem DropDown_AllSidesCor; 
 
         /// <summary>
         /// Initializes a new instance of the MyComponent1 class.
