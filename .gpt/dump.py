@@ -17,7 +17,7 @@ allowed_extensions = (
     '.txt', '.yaml', '.yml', '.jsonl', '.ini', '.sh', '.env', '.cfg', '.conf', '.config', '.log', '.srt', '.md',
     '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs', '.vue', '.svelte', '.html', '.htm', '.xhtml', '.css', '.scss', '.sass', '.less',
     '.java', '.class', '.jsp', '.jspx', '.py', '.pyw', '.pyx', '.pxd', '.pxi', '.pyc', '.pyo', '.pyd', 'Dockerfile', '.sln', '.csproj', '.vbproj',
-    '.cs', '.cpp', '.c', '.h', '.hpp', '.hxx', '.cxx', '.go', '.rs', '.swift', '.kt', '.kts', '.csproj.user', '.csproj.lock', '.gitignore', '.gitattributes',
+    '.cs', '.cpp', '.c', '.h', '.hpp', '.hxx', '.cxx', '.go', '.rs', '.swift', '.kt', '.kts', '.csproj.user', '.csproj.lock', '.gitattributes',
 )
 
 def generate_tree(directory, prefix=''):
@@ -62,10 +62,11 @@ with open('./.gpt/dump.txt', 'w', encoding='utf-8') as f:
         if os.path.isfile(obj):
             try:
                 with open(obj, 'r', encoding='utf-8') as o:
-                    if  obj.endswith(allowed_extensions):
+                    if obj.endswith(allowed_extensions):
                         content = o.read()
                     else:
                         content = o.read()[:20] + "\n................................"
                     f.write("<" + obj + '>\n' + content + '\n\n')
-            except (IOError, UnicodeDecodeError) as e:
-                f.write(f"&&& FILE: {obj}\n&&& ERROR: Could not read file: {e}\n\n")
+            except (IOError, UnicodeDecodeError):
+                pass
+                
