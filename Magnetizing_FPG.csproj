@@ -67,6 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Magnetizing_FPG\Core\CellState.cs" />
+    <Compile Include="Magnetizing_FPG\Core\FloorPlanResult.cs" />
+    <Compile Include="Magnetizing_FPG\Core\FloorPlanSolver.cs" />
+    <Compile Include="Magnetizing_FPG\Core\SolverData.cs" />
     <Compile Include="Magnetizing_FPG\RoomProgram\HouseInstanceTextInput.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -119,13 +123,6 @@
     <Content Include="Resources\SpringSystem_ESIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
 Copy "$(TargetPath)" "%25AppData%25\Grasshopper\Libraries\$(ProjectName).gha"</PostBuildEvent>
@@ -148,3 +145,4 @@ Copy "$(TargetPath)" "%25AppData%25\Grasshopper\Libraries\$(ProjectName).gha"</P
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 </Project>
+
