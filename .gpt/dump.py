@@ -4,12 +4,21 @@ import os
 objects_list = []
 
 # Define folders to exclude
-exclude_folders = ['node_modules', 'venv','.venv', '.github', 'tests', 'bin', 'obj', '__pycache__', '.gpt', 'tileset', 'postgres_data', 'docs',
-                   'References', 'Resources']
+exclude_folders = [
+    'node_modules', 'venv', '.venv', '__pycache__', 'env', '.env', '.cache', '.mypy_cache', '.pytest_cache',
+    'build', 'dist', 'bin', 'obj', '.git', '.github', '.gpt', '.idea', '.vscode',
+    'coverage', '.coverage', '.tox', '.eggs', 'eggs', '.gradle', '.svn', '.DS_Store',
+    'tileset', 'postgres_data', 'data', 'datasets', 'logs', 'doc', 'docs', 'tmp', 'temp', '.dump.log', '.vs', '.vscode',
+    'out', 'output', 'results', 'reports', 'test_results', 'tests', 'testdata', 'examples', 'sample_data',
+]
 
 # Allowed file extensions
-#allowed_extensions = ('.py', '.js', '.jsx', '.ts', '.tsx', '.env', '.ini', '.txt', '.yml')
-not_allowed_extensions = ('.gml', '.gfs', '.xml', '.geojson', '.obj', '.meta4', '.json', '.lock', '.exe', '.dll')
+allowed_extensions = (
+    '.txt', '.yaml', '.yml', '.jsonl', '.ini', '.sh', '.env', '.cfg', '.conf', '.config', '.log', '.srt', '.md',
+    '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs', '.vue', '.svelte', '.html', '.htm', '.xhtml', '.css', '.scss', '.sass', '.less',
+    '.java', '.class', '.jsp', '.jspx', '.py', '.pyw', '.pyx', '.pxd', '.pxi', '.pyc', '.pyo', '.pyd', 'Dockerfile', '.sln', '.csproj', '.vbproj',
+    '.cs', '.cpp', '.c', '.h', '.hpp', '.hxx', '.cxx', '.go', '.rs', '.swift', '.kt', '.kts', '.csproj.user', '.csproj.lock', '.gitignore', '.gitattributes',
+)
 
 def generate_tree(directory, prefix=''):
     """
@@ -40,7 +49,7 @@ with open('./.gpt/dump.txt', 'w', encoding='utf-8') as f:
     # f.write("\n".join(directory_tree) + "\n\n")
     
     # Walk through the current directory and its subdirectories
-    for dirpath, dirnames, filenames in os.walk(r"./Magnetizing_FPG/"):
+    for dirpath, dirnames, filenames in os.walk(r"./"):
         # Skip directories starting with "." or in the exclude list
         dirnames[:] = [d for d in dirnames if not d.startswith('.') and d not in exclude_folders]
 
@@ -53,10 +62,10 @@ with open('./.gpt/dump.txt', 'w', encoding='utf-8') as f:
         if os.path.isfile(obj):
             try:
                 with open(obj, 'r', encoding='utf-8') as o:
-                    if  not obj.endswith(not_allowed_extensions):
+                    if  obj.endswith(allowed_extensions):
                         content = o.read()
                     else:
-                        content = o.read()[:200] + "\n................................"
-                    f.write("&&& FILE: " + obj + '\n&&& CONTENT:\n' + content + '\n\n')
+                        content = o.read()[:20] + "\n................................"
+                    f.write("<" + obj + '>\n' + content + '\n\n')
             except (IOError, UnicodeDecodeError) as e:
                 f.write(f"&&& FILE: {obj}\n&&& ERROR: Could not read file: {e}\n\n")
