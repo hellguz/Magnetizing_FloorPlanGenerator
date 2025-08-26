@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Rhino (Debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "C:/Program Files/Rhino 7/System/Rhino.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "preLaunchTask": "build"
+        }
+    ]
+}

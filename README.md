@@ -17,12 +17,34 @@ This Grasshopper plugin provides an algorithmic solution for the complex task of
 
 ## Installation
 
-1. Ensure you have Rhino 6 or later and Grasshopper installed
+### Option 1: Pre-built Release
+1. Ensure you have Rhino 7 or later and Grasshopper installed
 2. Download the latest release from the [Food4Rhino page](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator)
 3. Unzip the downloaded file
 4. Copy the `Magnetizing_FPG.gha` file to your Grasshopper Libraries folder (typically `%AppData%\Grasshopper\Libraries\`)
 5. Restart Rhino and Grasshopper
 6. The Magnetizing Floor Plan Generator components should now be available in the Grasshopper canvas under the "Magnetizing_FPG" tab
+
+### Option 2: Build from Source (VS Code)
+1. Prerequisites:
+   - .NET Framework 4.8 SDK
+   - VS Code with C# extension
+   - Git
+   
+2. Clone and build:
+   ```bash
+   git clone https://github.com/yourusername/Magnetizing_FloorPlanGenerator.git
+   cd Magnetizing_FloorPlanGenerator
+   dotnet build src/Magnetizing_FPG.csproj -c Release
+   ```
+
+3. Install the plugin:
+   ```bash
+   # Copy the built .gha file to Grasshopper Libraries folder
+   copy build\net48\Magnetizing_FPG.gha "%AppData%\Grasshopper\Libraries\"
+   ```
+
+4. Restart Rhino and Grasshopper
 
 ## Usage
 
@@ -49,6 +71,38 @@ The Magnetizing Floor Plan Generator uses the following key steps:
 6. Optional post-processing (e.g., dead-end removal)
 
 The algorithm aims to balance various factors such as room adjacencies, proportions, and overall layout efficiency.
+
+## Development
+
+### Repository Structure
+```
+├── src/                    # Source code
+│   ├── Magnetizing_FPG/   # Main algorithm implementations
+│   └── Properties/        # Assembly info and resources
+├── libs/                  # Rhino/Grasshopper dependencies
+├── assets/               # Icons and resources
+├── docs/                 # Documentation and examples
+├── build/                # Build output
+└── legacy/               # Original Visual Studio project files
+```
+
+### Building in VS Code
+1. Open the repository in VS Code
+2. Use `Ctrl+Shift+P` → "Tasks: Run Task" → "build-gha" to build the release version
+3. Or use the terminal: `dotnet build src/Magnetizing_FPG.csproj -c Release`
+4. The built `.gha` file will be in `build/net48/`
+
+### Dependencies
+All required dependencies are included in the `libs/` folder:
+- `RhinoCommon.dll` - Core Rhino API
+- `Grasshopper.dll` - Grasshopper API  
+- `GH_IO.dll` - Grasshopper I/O operations
+- `clipper_library.dll` - 2D polygon operations
+
+### Testing
+1. Copy the built `.gha` file to your Grasshopper Libraries folder
+2. Launch Rhino and test the components in Grasshopper
+3. Use VS Code's debugger by pressing F5 (requires Rhino 7 installed)
 
 ## Contributing
 

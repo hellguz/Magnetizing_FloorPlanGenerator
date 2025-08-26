@@ -1,0 +1,10 @@
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\build\net48\Magnetizing_FPG.dll
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\build\net48\Magnetizing_FPG.pdb
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.csproj.AssemblyReference.cache
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.Properties.Resources.resources
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.csproj.GenerateResource.cache
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.csproj.CoreCompileInputs.cache
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.csproj.CopyComplete
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.dll
+C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Debug\net48\Magnetizing_FPG.pdb

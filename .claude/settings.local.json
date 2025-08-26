@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm:*)",
+      "Bash(dotnet build:*)",
+      "Read(/C:\\Program Files\\Rhino 7\\System/**)",
+      "Read(/C:\\Program Files\\Rhino 7\\System/**)",
+      "Read(/C:\\Program Files\\Rhino 7/**)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\Program Files\\Rhino 7\\System",
+      "C:\\Program Files\\Rhino 7\\Plug-ins\\Grasshopper"
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Magnetizing_FPG</AssemblyName>
+    <RootNamespace>Magnetizing_FPG</RootNamespace>
+    <OutputPath>../build/</OutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PostBuildEvent>copy "$(TargetPath)" "$(TargetDir)$(AssemblyName).gha"</PostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RhinoCommon">
+      <HintPath>../libs/RhinoCommon.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <HintPath>../libs/Grasshopper.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GH_IO">
+      <HintPath>../libs/GH_IO.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>../libs/clipper_library.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../assets/**" />
+  </ItemGroup>
+
+</Project>

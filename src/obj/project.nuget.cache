@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "NWtele5vvB/xdXqzFo2FywVQmFnz47oVzHhK2Y7gwM9o2HTWmrg9CDUIqO5GEpMiDqCWYo8qNrN0YN+3rMtjtw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hellg\\Documents\\Projects\\Magnetizing_FloorPlanGenerator\\src\\Magnetizing_FPG.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hellg\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
+    "C:\\Users\\hellg\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\hellg\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\hellg\\.nuget\\packages\\system.resources.extensions\\4.6.0\\system.resources.extensions.4.6.0.nupkg.sha512",
+    "C:\\Users\\hellg\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+  ],
+  "logs": []
+}
