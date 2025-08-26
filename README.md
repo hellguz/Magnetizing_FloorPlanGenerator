@@ -37,6 +37,8 @@ This Grasshopper plugin provides an algorithmic solution for the complex task of
    cd Magnetizing_FloorPlanGenerator
    dotnet build src/Magnetizing_FPG.csproj -c Release
    ```
+   
+   > **Note**: The repository is clean - no build artifacts are tracked by git. All dependencies are self-contained.
 
 3. Install the plugin:
    ```bash
