@@ -44,6 +44,17 @@
         "net48": {
           "targetAlias": "net48",
           "dependencies": {
+            "Costura.Fody": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.7.0, )"
+            },
+            "Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.8.0, )"
+            },
             "System.Resources.Extensions": {
               "target": "Package",
               "version": "[4.6.0, )"

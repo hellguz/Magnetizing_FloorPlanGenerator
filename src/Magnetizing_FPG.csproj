@@ -13,12 +13,19 @@
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <PostBuildEvent>copy "$(TargetPath)" "$(TargetDir)$(AssemblyName).gha"</PostBuildEvent>
-  </PropertyGroup>
+  <Target Name="CreateGHA" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(TargetName).gha" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +43,7 @@
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>../libs/clipper_library.dll</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 

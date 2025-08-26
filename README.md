@@ -93,11 +93,13 @@ The algorithm aims to balance various factors such as room adjacencies, proporti
 4. The built `.gha` file will be in `build/net48/`
 
 ### Dependencies
-All required dependencies are included in the `libs/` folder:
-- `RhinoCommon.dll` - Core Rhino API
-- `Grasshopper.dll` - Grasshopper API  
-- `GH_IO.dll` - Grasshopper I/O operations
-- `clipper_library.dll` - 2D polygon operations
+The plugin is **self-contained** - all 3rd party dependencies are embedded directly in the `.gha` file using Costura.Fody.
+
+Development dependencies in `libs/` folder:
+- `RhinoCommon.dll` - Core Rhino API (available in Rhino installation)
+- `Grasshopper.dll` - Grasshopper API (available in Rhino installation)
+- `GH_IO.dll` - Grasshopper I/O operations (available in Rhino installation)
+- `clipper_library.dll` - 2D polygon operations (embedded in final .gha)
 
 ### Testing
 1. Copy the built `.gha` file to your Grasshopper Libraries folder
