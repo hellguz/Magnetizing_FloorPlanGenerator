@@ -5,7 +5,8 @@
       "Bash(dotnet build:*)",
       "Read(/C:\\Program Files\\Rhino 7\\System/**)",
       "Read(/C:\\Program Files\\Rhino 7\\System/**)",
-      "Read(/C:\\Program Files\\Rhino 7/**)"
+      "Read(/C:\\Program Files\\Rhino 7/**)",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": [],
