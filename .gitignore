@@ -10,6 +10,8 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+*/[Bb]in/
+*/[Oo]bj/
 
 # Visual Studio files and folders
 .vs/

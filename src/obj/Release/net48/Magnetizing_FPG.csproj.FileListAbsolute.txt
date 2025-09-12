@@ -5,8 +5,6 @@ C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.csproj.GenerateResource.cache
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.csproj.CoreCompileInputs.cache
-C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.csproj.Fody.CopyLocal.cache
-C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.csproj.Fody.RuntimeCopyLocal.cache
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.csproj.CopyComplete
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.dll
 C:\Users\hellg\Documents\Projects\Magnetizing_FloorPlanGenerator\src\obj\Release\net48\Magnetizing_FPG.pdb
