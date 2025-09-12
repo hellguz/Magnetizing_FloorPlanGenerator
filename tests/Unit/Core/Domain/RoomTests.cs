@@ -135,6 +135,7 @@ namespace Magnetizing_FPG.Tests.Unit.Core.Domain
             // Arrange
             var room = new Room
             {
+                Name = "Test Room", // Add name to avoid name warning
                 Area = 20,
                 Dimensions = new Size2d(10, 2), // Aspect ratio = 5 > MaxAspectRatio = 2
                 MaxAspectRatio = 2.0

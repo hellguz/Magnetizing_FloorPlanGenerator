@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Magnetizing_FPG.Core.Domain
 {
@@ -117,10 +118,10 @@ namespace Magnetizing_FPG.Core.Domain
                 result.AddWarning("Room name should not be empty");
 
             if (Dimensions.Width > 0 && Dimensions.Width < MinWidth)
-                result.AddError($"Room width ({Dimensions.Width:F2}m) is less than minimum ({MinWidth:F2}m)");
+                result.AddError($"Room width ({Dimensions.Width.ToString("F2", CultureInfo.InvariantCulture)}m) is less than minimum ({MinWidth.ToString("F2", CultureInfo.InvariantCulture)}m)");
 
             if (AspectRatio > MaxAspectRatio)
-                result.AddWarning($"Room aspect ratio ({AspectRatio:F2}) exceeds maximum ({MaxAspectRatio:F2})");
+                result.AddWarning($"Room aspect ratio ({AspectRatio.ToString("F2", CultureInfo.InvariantCulture)}) exceeds maximum ({MaxAspectRatio.ToString("F2", CultureInfo.InvariantCulture)})");
 
             return result;
         }
@@ -191,7 +192,7 @@ namespace Magnetizing_FPG.Core.Domain
 
         public override string ToString()
         {
-            return $"Room {Id}: {Name} ({Area:F1}m²)";
+            return $"Room {Id}: {Name} ({Area.ToString("F1", CultureInfo.InvariantCulture)}m²)";
         }
 
         public override bool Equals(object obj)

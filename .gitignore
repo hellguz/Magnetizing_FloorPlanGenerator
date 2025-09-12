@@ -38,9 +38,10 @@ artifacts/
 *.coverage.xml
 *.coveragexml
 
-# NUnit
+# NUnit and xUnit test results
 *.VisualState.xml
 TestResult.xml
+TestResults/
 nunit-*.xml
 
 # Rhino/Grasshopper output files
@@ -72,10 +73,11 @@ libs/temp/
 *.plg
 *.opt
 *.vbw
+nul
 
 # Development tools
 .gpt/
-.claude/
+.claude/settings.local.json
 
 # OS files
 .DS_Store

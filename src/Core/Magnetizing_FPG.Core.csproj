@@ -8,6 +8,8 @@
     <OutputPath>../../build/Core/</OutputPath>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>../../build/Core/Magnetizing_FPG.Core.xml</DocumentationFile>
+    <LangVersion>7.3</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -28,11 +30,5 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Domain\**\*.cs" />
-    <Compile Include="Interfaces\**\*.cs" />
-    <Compile Include="Services\**\*.cs" />
-    <Compile Include="Exceptions\**\*.cs" />
-  </ItemGroup>
 
 </Project>
