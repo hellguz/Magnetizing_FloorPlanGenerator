@@ -1,0 +1,107 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+# Core Projects
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Core", "src\Core\Magnetizing_FPG.Core.csproj", "{A1234567-B123-C123-D123-123456789ABC}"
+EndProject
+
+# Infrastructure Projects  
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Infrastructure", "src\Infrastructure\Magnetizing_FPG.Infrastructure.csproj", "{B1234567-C123-D123-E123-123456789BCD}"
+EndProject
+
+# Grasshopper Integration
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Grasshopper", "src\Grasshopper\Magnetizing_FPG.Grasshopper.csproj", "{C1234567-D123-E123-F123-123456789CDE}"
+EndProject
+
+# Original Plugin (Legacy)
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG", "src\Magnetizing_FPG.csproj", "{D1234567-E123-F123-0123-123456789DEF}"
+EndProject
+
+# Test Projects
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Core.Tests", "tests\Unit\Magnetizing_FPG.Core.Tests.csproj", "{E1234567-F123-0123-1123-123456789EF0}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Integration.Tests", "tests\Integration\Magnetizing_FPG.Integration.Tests.csproj", "{F1234567-0123-1123-2123-123456789F01}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Performance.Tests", "tests\Performance\Magnetizing_FPG.Performance.Tests.csproj", "{01234567-1123-2123-3123-12345678901A}"
+EndProject
+
+# Example Projects
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnetizing_FPG.Examples.BasicUsage", "examples\BasicUsage\Magnetizing_FPG.Examples.BasicUsage.csproj", "{11234567-2123-3123-4123-12345678912B}"
+EndProject
+
+# Solution Folders
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{21234567-3123-4123-5123-12345678923C}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31234567-4123-5123-6123-12345678934D}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{41234567-5123-6123-7123-12345678945E}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{51234567-6123-7123-8123-12345678956F}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1234567-B123-C123-D123-123456789ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1234567-B123-C123-D123-123456789ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1234567-B123-C123-D123-123456789ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1234567-B123-C123-D123-123456789ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{B1234567-C123-D123-E123-123456789BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1234567-C123-D123-E123-123456789BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1234567-C123-D123-E123-123456789BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1234567-C123-D123-E123-123456789BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{C1234567-D123-E123-F123-123456789CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1234567-D123-E123-F123-123456789CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1234567-D123-E123-F123-123456789CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1234567-D123-E123-F123-123456789CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{D1234567-E123-F123-0123-123456789DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1234567-E123-F123-0123-123456789DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1234567-E123-F123-0123-123456789DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1234567-E123-F123-0123-123456789DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{E1234567-F123-0123-1123-123456789EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1234567-F123-0123-1123-123456789EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1234567-F123-0123-1123-123456789EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1234567-F123-0123-1123-123456789EF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{F1234567-0123-1123-2123-123456789F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1234567-0123-1123-2123-123456789F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1234567-0123-1123-2123-123456789F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1234567-0123-1123-2123-123456789F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{01234567-1123-2123-3123-12345678901A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01234567-1123-2123-3123-12345678901A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01234567-1123-2123-3123-12345678901A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01234567-1123-2123-3123-12345678901A}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{11234567-2123-3123-4123-12345678912B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11234567-2123-3123-4123-12345678912B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11234567-2123-3123-4123-12345678912B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11234567-2123-3123-4123-12345678912B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	
+	GlobalSection(NestedProjects) = preSolution
+		{A1234567-B123-C123-D123-123456789ABC} = {21234567-3123-4123-5123-12345678923C}
+		{B1234567-C123-D123-E123-123456789BCD} = {21234567-3123-4123-5123-12345678923C}
+		{C1234567-D123-E123-F123-123456789CDE} = {21234567-3123-4123-5123-12345678923C}
+		{D1234567-E123-F123-0123-123456789DEF} = {21234567-3123-4123-5123-12345678923C}
+		{E1234567-F123-0123-1123-123456789EF0} = {31234567-4123-5123-6123-12345678934D}
+		{F1234567-0123-1123-2123-123456789F01} = {31234567-4123-5123-6123-12345678934D}
+		{01234567-1123-2123-3123-12345678901A} = {31234567-4123-5123-6123-12345678934D}
+		{11234567-2123-3123-4123-12345678912B} = {41234567-5123-6123-7123-12345678945E}
+	EndGlobalSection
+EndGlobal

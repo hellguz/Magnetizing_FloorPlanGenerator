@@ -1,0 +1,41 @@
+{
+  "name": "simple_office",
+  "description": "Simple 3-room office layout for basic testing",
+  "entrance_point": {"x": 10, "y": 0, "z": 0},
+  "total_area": 60,
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Entrance",
+      "area": 15,
+      "is_hall": true,
+      "min_width": 2.0,
+      "max_aspect_ratio": 2.0
+    },
+    {
+      "id": 2,
+      "name": "Office 1",
+      "area": 25,
+      "is_hall": false,
+      "min_width": 3.0,
+      "max_aspect_ratio": 1.8
+    },
+    {
+      "id": 3,
+      "name": "Office 2",
+      "area": 20,
+      "is_hall": false,
+      "min_width": 3.0,
+      "max_aspect_ratio": 1.8
+    }
+  ],
+  "adjacencies": [
+    {"from": 1, "to": 2, "type": "required"},
+    {"from": 1, "to": 3, "type": "required"}
+  ],
+  "constraints": {
+    "entrance_room_id": 1,
+    "circulation_percentage": 0.1,
+    "min_corridor_width": 1.2
+  }
+}
