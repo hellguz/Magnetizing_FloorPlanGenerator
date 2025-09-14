@@ -12,7 +12,7 @@ namespace Magnetizing_FPG
     ///  RoomInstance class contains all the information about 
     ///  one single room: name, ID, all connected rooms.
     /// </summary>
-    public class RoomInstance : GH_Component
+    public class RoomInstance : GH_Component, IRoomInstance
     {
         /// <summary>
         /// Initializes a new instance of the RoomInstance class.
@@ -83,6 +83,45 @@ namespace Magnetizing_FPG
                 return list;
             }
 
+        }
+
+        // IRoomInstance interface properties
+        int IRoomInstance.RoomId 
+        { 
+            get { return RoomId; } 
+            set { RoomId = value; } 
+        }
+
+        double IRoomInstance.RoomArea 
+        { 
+            get { return RoomArea; } 
+            set { RoomArea = value; } 
+        }
+
+        string IRoomInstance.RoomName 
+        { 
+            get { return RoomName; } 
+            set { RoomName = value; } 
+        }
+
+        bool IRoomInstance.isHall 
+        { 
+            get { return isHall; } 
+            set { isHall = value; } 
+        }
+
+        List<IRoomInstance> IRoomInstance.AdjacentRoomsList
+        {
+            get 
+            { 
+                return AdjacentRoomsList.Cast<IRoomInstance>().ToList(); 
+            }
+        }
+
+        bool IRoomInstance.hasMissingAdj 
+        { 
+            get { return hasMissingAdj; } 
+            set { hasMissingAdj = value; } 
         }
 
         /// <summary>

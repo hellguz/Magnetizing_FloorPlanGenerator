@@ -12,6 +12,8 @@ bld/
 [Oo]bj/
 */[Bb]in/
 */[Oo]bj/
+**/bin/
+**/obj/
 
 # Visual Studio files and folders
 .vs/
@@ -32,6 +34,13 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+.nuget/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
 
 # Visual Studio code coverage results
 *.coverage
@@ -81,3 +90,4 @@ libs/temp/
 .DS_Store
 Thumbs.db
 desktop.ini
+nul

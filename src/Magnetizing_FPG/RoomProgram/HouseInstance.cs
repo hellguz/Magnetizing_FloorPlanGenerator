@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Magnetizing_FPG.Properties;
 using Grasshopper.Kernel;
@@ -12,7 +13,7 @@ namespace Magnetizing_FPG
      * instance of a set of rooms that belong to one house/storey.
      */
 
-    public class HouseInstance : GH_Component
+    public class HouseInstance : GH_Component, IHouseInstance
     {
         /// <summary>
         /// Initializes a new instance of the HouseInstance class.
@@ -50,6 +51,38 @@ namespace Magnetizing_FPG
                 return list;
             }
             //  set { }
+        }
+
+        // IHouseInstance interface properties
+        Curve IHouseInstance.boundary 
+        { 
+            get { return boundary; } 
+        }
+
+        Point3d IHouseInstance.startingPoint 
+        { 
+            get { return startingPoint; } 
+        }
+
+        bool IHouseInstance.tryRotateBoundary 
+        { 
+            get { return tryRotateBoundary; } 
+        }
+
+        List<IRoomInstance> IHouseInstance.RoomInstances 
+        { 
+            get { return RoomInstances.Cast<IRoomInstance>().ToList(); } 
+        }
+
+        List<string> IHouseInstance.adjStrList 
+        { 
+            get { return adjStrList; } 
+        }
+
+        int[,] IHouseInstance.adjArray 
+        { 
+            get { return adjArray; } 
+            set { adjArray = value; } 
         }
 
         public override void CreateAttributes()
