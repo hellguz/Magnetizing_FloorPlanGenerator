@@ -1,162 +1,117 @@
 # Magnetizing Floor Plan Generator
 
-## Overview
+A Grasshopper plugin for automatically generating floor plans using a novel "magnetizing" algorithm that intelligently arranges rooms based on adjacency requirements and spatial constraints.
 
-The Magnetizing Floor Plan Generator is an innovative tool for automatically generating floor plans for public buildings. It uses a novel "magnetizing" approach to arrange rooms and create efficient layouts while considering adjacency requirements and spatial constraints.
+## ✨ What it does
 
-This Grasshopper plugin provides an algorithmic solution for the complex task of floor plan generation, which is typically time-consuming and challenging for architects, developers, and urban planners. The generator aims to produce diverse, flexible, and rapid results that can serve as a starting point for further design refinement.
+This tool helps architects, developers, and urban planners quickly generate efficient floor plan layouts for public buildings. Instead of manually arranging rooms, the algorithm uses a quasi-evolutionary approach to optimize room placement, creating diverse layout options that serve as excellent starting points for further design development.
 
-## Key Features
+**Key Features:**
+- 🏗️ Automatic room arrangement based on your building program
+- 🔗 Respects room adjacency requirements (which rooms should be connected)
+- 📐 Works within custom building boundaries
+- 🎯 Generates multiple layout variations for comparison
+- ⚡ Fast iteration for exploring design alternatives
 
-- Automatic generation of floor plans based on room program and adjacency requirements
-- Flexible input of room areas, connections, and building boundary
-- Iterative optimization using a quasi-evolutionary strategy 
-- Corridor and circulation space generation
-- Adjustable parameters for fine-tuning results
-- Visual output of generated floor plans in Rhino/Grasshopper
+## 📥 Installation (Easy!)
 
-## Installation
+### Option 1: Download Pre-built Plugin *(Recommended)*
+1. **Get Rhino 7+** - Make sure you have Rhino 7 or later with Grasshopper
+2. **Download** the latest `.gha` file from [Food4Rhino](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator)
+3. **Copy** the `Magnetizing_FPG.gha` file to your Grasshopper Libraries folder:
+   - Windows: `%AppData%\Grasshopper\Libraries\`
+   - Mac: `~/Library/Application Support/McNeel/Rhinoceros/MacPlugIns/Grasshopper/Libraries/`
+4. **Restart** Rhino and Grasshopper
+5. **Find** the components under the "Magnetizing_FPG" tab in Grasshopper
 
-### Option 1: Pre-built Release
-1. Ensure you have Rhino 7 or later and Grasshopper installed
-2. Download the latest release from the [Food4Rhino page](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator)
-3. Unzip the downloaded file
-4. Copy the `Magnetizing_FPG.gha` file to your Grasshopper Libraries folder (typically `%AppData%\Grasshopper\Libraries\`)
-5. Restart Rhino and Grasshopper
-6. The Magnetizing Floor Plan Generator components should now be available in the Grasshopper canvas under the "Magnetizing_FPG" tab
+That's it! No additional downloads needed - the plugin works with the .NET Framework that's already on your system.
 
-### Option 2: Build from Source
-1. Prerequisites:
-   - .NET Framework 4.8 SDK or Visual Studio 2019/2022
-   - Git (optional)
-   
-2. Clone and build:
-   ```bash
-   git clone https://github.com/yourusername/Magnetizing_FloorPlanGenerator.git
-   cd Magnetizing_FloorPlanGenerator
-   dotnet build -c Release
-   ```
-   
-   > **Note**: The repository is clean - no build artifacts are tracked by git. All dependencies are self-contained. The build process automatically creates both `.dll` and `.gha` files.
+### Option 2: Build from Source (For Developers)
+**Prerequisites:** Visual Studio Code + .NET Framework 4.8 SDK
 
-3. Install the plugin:
-   ```bash
-   # Windows (Command Prompt)
-   copy build\net48\Magnetizing_FPG.gha "%AppData%\Grasshopper\Libraries\"
-   
-   # Windows (PowerShell)
-   Copy-Item "build\net48\Magnetizing_FPG.gha" "$env:APPDATA\Grasshopper\Libraries\"
-   
-   # macOS/Linux (if using Rhino for Mac)
-   cp build/net48/Magnetizing_FPG.gha ~/Library/Application\ Support/McNeel/Rhinoceros/MacPlugIns/Grasshopper/Libraries/
-   ```
+```bash
+git clone https://github.com/yourusername/Magnetizing_FloorPlanGenerator.git
+cd Magnetizing_FloorPlanGenerator
+dotnet build -c Release
+copy build\net48\Magnetizing_FPG.gha "%AppData%\Grasshopper\Libraries\"
+```
 
-4. Restart Rhino and Grasshopper
+## 🚀 How to Use
 
-## Usage
+1. **Create your building boundary** - Draw a closed curve in Rhino
+2. **Add HouseInstance component** - Connect your boundary curve
+3. **Define your room program** - Use RoomInstance components to specify:
+   - Room names (e.g., "Office", "Meeting Room", "Lobby")
+   - Room areas (in square meters)
+   - Which rooms should be adjacent to each other
+4. **Add MagnetizingRooms_ES component** - This runs the algorithm
+5. **Adjust parameters** - Fine-tune cell size, iterations, and other settings
+6. **Get results** - The algorithm outputs optimized floor plan layouts as curves
 
-1. Create a new Grasshopper definition
-2. Add the `HouseInstance` component to your canvas
-3. Connect your building boundary curve to the "Boundary" input
-4. Use `RoomInstance` components to define your room program (names, areas, connections)
-5. Connect the `RoomInstance` components to the `HouseInstance`
-6. Add the `MagnetizingRooms_ES` component and connect the `HouseInstance` to it
-7. Adjust parameters as needed (cell size, iterations, etc.)
-8. The generated floor plan will be output as curves
+The algorithm intelligently places rooms to satisfy your adjacency requirements while efficiently using the available space.
 
-For more detailed usage instructions and examples, please refer to the [official documentation](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator).
+## 🏗️ How It Works
 
-## How It Works
+The "magnetizing" algorithm treats rooms like magnetic objects that attract or repel each other based on your adjacency requirements. The process:
 
-The Magnetizing Floor Plan Generator uses the following key steps:
+1. **Initialization** - Rooms are randomly placed within the building boundary
+2. **Magnetizing Forces** - Adjacent rooms attract each other, non-adjacent rooms repel
+3. **Evolutionary Optimization** - Multiple generations of layouts are tested and improved
+4. **Constraint Satisfaction** - Solutions respect room sizes, building boundaries, and adjacency rules
+5. **Output Generation** - The best layouts are converted to architectural drawings
 
-1. Initialization of rooms based on input program
-2. Iterative placement of rooms considering adjacencies
-3. Corridor generation to connect spaces
-4. Optimization using a quasi-evolutionary strategy
-5. Fine-tuning of room positions and proportions
-6. Optional post-processing (e.g., dead-end removal)
+## 🔧 Technical Details
 
-The algorithm aims to balance various factors such as room adjacencies, proportions, and overall layout efficiency.
+- **Platform:** Grasshopper for Rhino 7+
+- **Framework:** .NET Framework 4.8 *(chosen for maximum compatibility - no additional runtime downloads required)*
+- **Dependencies:** Self-contained (all libraries embedded in the plugin)
+- **Performance:** Optimized for real-time feedback with reasonable building sizes
 
-## Development
+## 📁 Repository Structure
 
-### Repository Structure
 ```
 ├── src/                    # Source code
-│   ├── Magnetizing_FPG/   # Main algorithm implementations
-│   └── Properties/        # Assembly info and resources
-├── libs/                  # Rhino/Grasshopper dependencies
-├── assets/               # Icons and resources
-├── docs/                 # Documentation and examples
-├── build/                # Build output
-└── legacy/               # Original Visual Studio project files
+│   ├── MagnetizingRooms_ES.cs     # Main algorithm implementation
+│   ├── RoomProgram/               # Room and house instance classes
+│   └── Properties/                # Assembly info and resources
+├── libs/                  # Rhino/Grasshopper dependencies  
+├── build/                 # Build output (.dll and .gha files)
+└── README.md             # This file
 ```
 
-### Building
-1. **Command Line**: Navigate to project root and run:
-   ```bash
-   dotnet build -c Release
-   ```
-   
-2. **VS Code**: Open the repository and either:
-   - Use terminal: `dotnet build -c Release`
-   - Use `Ctrl+Shift+P` → "Tasks: Run Task" → "build" (if configured)
-   
-3. **Visual Studio**: Open `Magnetizing_FPG.sln` and build in Release mode
+## 👥 Authors & Contributors
 
-The built files will be in `build/net48/`:
-- `Magnetizing_FPG.dll` - Main library
-- `Magnetizing_FPG.gha` - Grasshopper plugin file
+**Main Author:** Egor Gavrilov
 
-### Dependencies
-The plugin is **self-contained** - all 3rd party dependencies are embedded directly in the `.gha` file using Costura.Fody.
-
-Development dependencies in `libs/` folder:
-- `RhinoCommon.dll` - Core Rhino API (available in Rhino installation)
-- `Grasshopper.dll` - Grasshopper API (available in Rhino installation)
-- `GH_IO.dll` - Grasshopper I/O operations (available in Rhino installation)
-- `clipper_library.dll` - 2D polygon operations (embedded in final .gha)
-
-### Testing
-1. Copy the built `.gha` file to your Grasshopper Libraries folder
-2. Launch Rhino and test the components in Grasshopper
-3. Use VS Code's debugger by pressing F5 (requires Rhino 7 installed)
-
-## Contributing
-
-Contributions to improve the Magnetizing Floor Plan Generator are welcome. Please feel free to submit issues or pull requests through GitHub.
-
-## License
-
-
-## Authors
-
-- Egor Gavrilov
-
-## Co-Authors
-
-- Sven Schneider
+**Co-Authors:**
+- Sven Schneider  
 - Martin Dennemark
 - Reinhard Koenig
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-This project was developed at the Bauhaus-University Weimar. We thank all contributors and testers who have helped improve this tool.
+This project was developed at **Bauhaus-University Weimar**. We thank all contributors and testers who helped improve this tool, and the broader computational design community for their valuable feedback.
 
-## Citation
+## 📄 Citation
 
 If you use this tool in your research or projects, please cite:
 
 ```
-Gavrilov, E., Schneider, S., Dennemark, M., Koenig, R. (2020). Computer-aided approach to public buildings floor plan generation. Magnetizing Floor Plan Generator. In Proceedings of the 1st International Conference on Optimization-Driven Architectural Design.
+Gavrilov, E., Schneider, S., Dennemark, M., Koenig, R. (2020). 
+Computer-aided approach to public buildings floor plan generation. 
+Magnetizing Floor Plan Generator. In Proceedings of the 1st International 
+Conference on Optimization-Driven Architectural Design.
 ```
 
-## Contact
+## 📚 References
 
-For questions or support, please contact [contact information].
+- [Research Paper](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/11249532/25a1c0c0-c0ef-4931-8df6-98bf77f7b074/Computer-aided_approach_to_public_buildings_floor.pdf) - Original research publication
+- [Food4Rhino Page](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator) - Official plugin page
 
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/11249532/25a1c0c0-c0ef-4931-8df6-98bf77f7b074/Computer-aided_approach_to_public_buildings_floor.pdf
-[2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/11249532/7a06ca7e-a198-4bcf-86ae-607b84a82103/concatenated_code.txt
-[3] https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator
+## 🐛 Support
+
+Found a bug or have a feature request? Please report issues on our [GitHub Issues page](https://github.com/yourusername/Magnetizing_FloorPlanGenerator/issues).
+
+---
+
+*Built with ❤️ for the architectural design community*
