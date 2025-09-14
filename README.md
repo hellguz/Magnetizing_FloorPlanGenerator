@@ -25,25 +25,30 @@ This Grasshopper plugin provides an algorithmic solution for the complex task of
 5. Restart Rhino and Grasshopper
 6. The Magnetizing Floor Plan Generator components should now be available in the Grasshopper canvas under the "Magnetizing_FPG" tab
 
-### Option 2: Build from Source (VS Code)
+### Option 2: Build from Source
 1. Prerequisites:
-   - .NET Framework 4.8 SDK
-   - VS Code with C# extension
-   - Git
+   - .NET Framework 4.8 SDK or Visual Studio 2019/2022
+   - Git (optional)
    
 2. Clone and build:
    ```bash
    git clone https://github.com/yourusername/Magnetizing_FloorPlanGenerator.git
    cd Magnetizing_FloorPlanGenerator
-   dotnet build src/Magnetizing_FPG.csproj -c Release
+   dotnet build -c Release
    ```
    
-   > **Note**: The repository is clean - no build artifacts are tracked by git. All dependencies are self-contained.
+   > **Note**: The repository is clean - no build artifacts are tracked by git. All dependencies are self-contained. The build process automatically creates both `.dll` and `.gha` files.
 
 3. Install the plugin:
    ```bash
-   # Copy the built .gha file to Grasshopper Libraries folder
+   # Windows (Command Prompt)
    copy build\net48\Magnetizing_FPG.gha "%AppData%\Grasshopper\Libraries\"
+   
+   # Windows (PowerShell)
+   Copy-Item "build\net48\Magnetizing_FPG.gha" "$env:APPDATA\Grasshopper\Libraries\"
+   
+   # macOS/Linux (if using Rhino for Mac)
+   cp build/net48/Magnetizing_FPG.gha ~/Library/Application\ Support/McNeel/Rhinoceros/MacPlugIns/Grasshopper/Libraries/
    ```
 
 4. Restart Rhino and Grasshopper
@@ -88,11 +93,21 @@ The algorithm aims to balance various factors such as room adjacencies, proporti
 └── legacy/               # Original Visual Studio project files
 ```
 
-### Building in VS Code
-1. Open the repository in VS Code
-2. Use `Ctrl+Shift+P` → "Tasks: Run Task" → "build-gha" to build the release version
-3. Or use the terminal: `dotnet build src/Magnetizing_FPG.csproj -c Release`
-4. The built `.gha` file will be in `build/net48/`
+### Building
+1. **Command Line**: Navigate to project root and run:
+   ```bash
+   dotnet build -c Release
+   ```
+   
+2. **VS Code**: Open the repository and either:
+   - Use terminal: `dotnet build -c Release`
+   - Use `Ctrl+Shift+P` → "Tasks: Run Task" → "build" (if configured)
+   
+3. **Visual Studio**: Open `Magnetizing_FPG.sln` and build in Release mode
+
+The built files will be in `build/net48/`:
+- `Magnetizing_FPG.dll` - Main library
+- `Magnetizing_FPG.gha` - Grasshopper plugin file
 
 ### Dependencies
 The plugin is **self-contained** - all 3rd party dependencies are embedded directly in the `.gha` file using Costura.Fody.
