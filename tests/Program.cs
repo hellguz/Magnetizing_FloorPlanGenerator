@@ -288,8 +288,8 @@ namespace FloorPlanGeneratorTests
             {
                 HouseName = "Test House",
                 FloorName = "Ground Floor",
-                Boundary = SimpleBoundary.CreateRectangle(0, 0, 10, 8),
-                StartingPoint = new SimplePoint(1, 1, 0),
+                Boundary = SimpleBoundary.CreateRectangle(0, 0, 250, 200),
+                StartingPoint = new SimplePoint(70, 60, 0),
                 TryRotateBoundary = false,
                 AdjacencyStrings = new List<string> { "1-2", "1-3" }
             };
@@ -306,7 +306,7 @@ namespace FloorPlanGeneratorTests
             {
                 House = house,
                 Iterations = 50, // Reduced for faster testing
-                MaxAdjDistance = 2.0,
+                MaxAdjDistance = 3.0,
                 CellSize = 1.0
             };
         }
