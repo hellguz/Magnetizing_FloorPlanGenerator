@@ -1,0 +1,81 @@
+{
+  "TestName": "BasicThreeRoomTest",
+  "Description": "Test with living room, kitchen, and bedroom in rectangular boundary",
+  "RandomSeed": 12345,
+  "HouseInstance": {
+    "HouseName": "Test House",
+    "FloorName": "Ground Floor",
+    "Rooms": [
+      {
+        "RoomName": "Living Room",
+        "RoomArea": 20.0,
+        "IsHall": false,
+        "IsEntrance": true
+      },
+      {
+        "RoomName": "Kitchen",
+        "RoomArea": 15.0,
+        "IsHall": false,
+        "IsEntrance": false
+      },
+      {
+        "RoomName": "Bedroom",
+        "RoomArea": 18.0,
+        "IsHall": false,
+        "IsEntrance": false
+      }
+    ],
+    "Adjacencies": [
+      "1-2",
+      "1-3"
+    ],
+    "Boundary": {
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        {
+          "X": 10.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        {
+          "X": 10.0,
+          "Y": 8.0,
+          "Z": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 8.0,
+          "Z": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        }
+      ]
+    },
+    "StartingPoint": {
+      "X": 1.0,
+      "Y": 1.0,
+      "Z": 0.0
+    },
+    "TryRotateBoundary": false
+  },
+  "Iterations": 100,
+  "MaxAdjDistance": 2.0,
+  "CellSize": 1.0,
+  "ExpectedRoomCount": 3,
+  "ExpectedRoomNames": [
+    "Living Room",
+    "Kitchen",
+    "Bedroom"
+  ],
+  "ExpectedTotalArea": 0.0,
+  "ExpectCorridors": true,
+  "CreatedDate": "2025-09-15T09:48:02.0700221+02:00",
+  "CreatedBy": "AlgorithmTestFramework"
+}

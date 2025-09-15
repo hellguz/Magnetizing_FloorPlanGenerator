@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Magnetizing_FPG;
+using Magnetizing_FPG.CoreAlgorithm;
 using Rhino.Geometry;
 using Grasshopper.Kernel;
 
@@ -156,24 +157,72 @@ namespace FloorPlanGeneratorTests
                     Console.WriteLine("⚠️  Component test failed: " + compEx.Message);
                 }
 
-                // Test 8: Algorithm Testing Framework
-                Console.WriteLine("\nTest 8: Algorithm Testing Framework...");
+                // Test 8: Standalone Core Algorithm Testing
+                Console.WriteLine("\nTest 8: Standalone Core Algorithm Testing...");
+                try
+                {
+                    // Test core algorithm directly without Grasshopper
+                    var coreAlgorithm = new CoreMagnetizingAlgorithm(12345); // Fixed seed
+                    Console.WriteLine("✅ Core algorithm instantiated with seed: " + coreAlgorithm.RandomSeed);
+
+                    // Create simple test input
+                    var algorithmInput = CreateSimpleAlgorithmInput();
+                    Console.WriteLine("✅ Created algorithm input with " + algorithmInput.House.Rooms.Count + " rooms");
+
+                    // Run the algorithm
+                    Console.WriteLine("🚀 Running core algorithm...");
+                    var algorithmResult = coreAlgorithm.GenerateFloorPlan(algorithmInput);
+
+                    Console.WriteLine("📊 Algorithm Results:");
+                    Console.WriteLine("   Success: " + (algorithmResult.Success ? "✅" : "❌"));
+                    Console.WriteLine("   Placed rooms: " + algorithmResult.PlacedRoomsCount + "/" + algorithmResult.TotalRoomsCount);
+                    Console.WriteLine("   Grid size: " + algorithmResult.GridWidth + "x" + algorithmResult.GridHeight);
+                    Console.WriteLine("   RandomSeed: " + algorithmResult.RandomSeed);
+                    Console.WriteLine("   Message: " + algorithmResult.Message);
+
+                    if (!algorithmResult.Success)
+                    {
+                        Console.WriteLine("   Error: " + algorithmResult.ErrorDetails);
+                    }
+
+                    // Test deterministic behavior
+                    Console.WriteLine("\n🔄 Testing deterministic behavior...");
+                    var algorithm2 = new CoreMagnetizingAlgorithm(12345); // Same seed
+                    var result2 = algorithm2.GenerateFloorPlan(algorithmInput);
+
+                    bool isDeterministic = algorithmResult.RandomSeed == result2.RandomSeed &&
+                                         algorithmResult.PlacedRoomsCount == result2.PlacedRoomsCount;
+                    Console.WriteLine("   Deterministic behavior: " + (isDeterministic ? "✅" : "❌"));
+
+                    if (isDeterministic)
+                    {
+                        Console.WriteLine("   ✅ Same seed produces consistent results!");
+                    }
+                }
+                catch (Exception testEx)
+                {
+                    Console.WriteLine("⚠️  Core algorithm testing failed: " + testEx.Message);
+                    Console.WriteLine("   Error details: " + testEx.ToString());
+                }
+
+                // Test 9: Original Algorithm Testing Framework
+                Console.WriteLine("\nTest 9: Original Algorithm Testing Framework...");
                 try
                 {
                     var algorithmTester = new SimpleAlgorithmTester();
-                    
+
                     // Create test case
                     var testCase = CreateSampleTestCase();
                     Console.WriteLine("✅ Created test case: " + testCase.TestName);
-                    
+
                     // Save test case for future reference
                     algorithmTester.SaveTestCase(testCase);
                     Console.WriteLine("✅ Saved test case to testdata/" + testCase.TestName + ".json");
-                    
+
                     // Execute basic algorithm tests
-                    Console.WriteLine("🚀 Executing algorithm configuration test...");
+                    Console.WriteLine("🚀 Executing original algorithm configuration test...");
                     var result = algorithmTester.TestAlgorithmBasics(testCase);
-                    
+
                     Console.WriteLine("📊 Test Results:");
                     Console.WriteLine("   Execution time: " + result.ExecutionTimeMs + "ms");
                     Console.WriteLine("   Algorithm instantiated: " + (result.AlgorithmInstantiated ? "✅" : "❌"));
@@ -182,25 +231,25 @@ namespace FloorPlanGeneratorTests
                     Console.WriteLine("   Boundary created: " + (result.BoundaryCreated ? "✅" : "❌"));
                     Console.WriteLine("   Rooms configured: " + (result.RoomsConfigured ? "✅" : "❌"));
                     Console.WriteLine("   Adjacencies configured: " + (result.AdjacenciesConfigured ? "✅" : "❌"));
-                    
+
                     if (result.Success)
                     {
-                        Console.WriteLine("✅ Algorithm configuration test passed!");
-                        
+                        Console.WriteLine("✅ Original algorithm configuration test passed!");
+
                         // Test deterministic behavior
-                        Console.WriteLine("🔄 Testing deterministic behavior...");
+                        Console.WriteLine("🔄 Testing original algorithm deterministic behavior...");
                         var deterministicResult = algorithmTester.TestDeterministicBehavior(testCase);
                         Console.WriteLine("   Deterministic behavior: " + (deterministicResult.DeterministicBehaviorVerified ? "✅" : "❌"));
                     }
                     else
                     {
-                        Console.WriteLine("❌ Algorithm configuration test failed:");
+                        Console.WriteLine("❌ Original algorithm configuration test failed:");
                         Console.WriteLine("   Error: " + result.ErrorMessage);
                     }
                 }
                 catch (Exception testEx)
                 {
-                    Console.WriteLine("⚠️  Algorithm testing failed: " + testEx.Message);
+                    Console.WriteLine("⚠️  Original algorithm testing failed: " + testEx.Message);
                     Console.WriteLine("   Error details: " + testEx.ToString());
                 }
 
@@ -231,6 +280,35 @@ namespace FloorPlanGeneratorTests
 
             Console.WriteLine("\nPress any key to exit...");
             Console.ReadKey();
+        }
+
+        private static AlgorithmInput CreateSimpleAlgorithmInput()
+        {
+            var house = new SimpleHouse
+            {
+                HouseName = "Test House",
+                FloorName = "Ground Floor",
+                Boundary = SimpleBoundary.CreateRectangle(0, 0, 10, 8),
+                StartingPoint = new SimplePoint(1, 1, 0),
+                TryRotateBoundary = false,
+                AdjacencyStrings = new List<string> { "1-2", "1-3" }
+            };
+
+            // Add rooms
+            house.Rooms.Add(new SimpleRoom("Living Room", 20, false, true)); // Entrance room
+            house.Rooms.Add(new SimpleRoom("Kitchen", 15, false, false));
+            house.Rooms.Add(new SimpleRoom("Bedroom", 18, false, false));
+
+            // Generate adjacency array
+            house.GenerateAdjacencyArray();
+
+            return new AlgorithmInput
+            {
+                House = house,
+                Iterations = 50, // Reduced for faster testing
+                MaxAdjDistance = 2.0,
+                CellSize = 1.0
+            };
         }
 
         private static AlgorithmTestCase CreateSampleTestCase()

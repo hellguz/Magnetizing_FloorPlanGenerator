@@ -14,7 +14,8 @@
       "Bash(dotnet clean:*)",
       "Bash(dotnet run:*)",
       "Read(//c/Program Files/Rhino 7/**)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(FloorPlanGeneratorTests.exe)"
     ],
     "deny": [],
     "ask": [],
