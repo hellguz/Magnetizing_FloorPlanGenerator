@@ -108,6 +108,74 @@ Conference on Optimization-Driven Architectural Design.
 - [Research Paper](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/11249532/25a1c0c0-c0ef-4931-8df6-98bf77f7b074/Computer-aided_approach_to_public_buildings_floor.pdf) - Original research publication
 - [Food4Rhino Page](https://www.food4rhino.com/en/app/magnetizing-floor-plan-generator) - Official plugin page
 
+## 🧪 Testing & Development
+
+### Running Algorithm Tests
+
+The project includes a standalone test runner that allows you to test the core algorithm without Grasshopper:
+
+```bash
+# Navigate to project directory
+cd Magnetizing_FloorPlanGenerator
+
+# Run the test suite
+dotnet run --project tests/ConsoleTestRunner.csproj
+```
+
+This will run comprehensive tests including:
+- ✅ Core algorithm instantiation and configuration
+- ✅ RandomSeed deterministic behavior validation
+- ✅ Standalone algorithm execution (without Grasshopper dependencies)
+- ✅ Original Grasshopper component testing
+- ✅ Test case management and regression testing
+
+### Building the Project
+
+```bash
+# Build the main Grasshopper plugin
+dotnet build src/Magnetizing_FPG.csproj
+
+# Build the test runner
+dotnet build tests/ConsoleTestRunner.csproj
+
+# Build everything
+dotnet build Magnetizing_FPG.sln
+```
+
+### Core Algorithm Usage (Standalone)
+
+The extracted core algorithm can be used independently for testing and development:
+
+```csharp
+using Magnetizing_FPG.CoreAlgorithm;
+
+// Create standalone algorithm
+var algorithm = new CoreMagnetizingAlgorithm(12345); // Fixed seed for deterministic results
+
+// Create test input
+var input = new AlgorithmInput {
+    House = new SimpleHouse {
+        Boundary = SimpleBoundary.CreateRectangle(0, 0, 10, 8),
+        Rooms = {
+            new SimpleRoom("Living Room", 20, false, true), // Last param = isEntrance
+            new SimpleRoom("Kitchen", 15),
+            new SimpleRoom("Bedroom", 18)
+        },
+        AdjacencyStrings = { "1-2", "1-3" } // Room connections
+    },
+    Iterations = 50,
+    MaxAdjDistance = 2.0,
+    CellSize = 1.0
+};
+
+// Run algorithm
+var result = algorithm.GenerateFloorPlan(input);
+
+// Check results
+Console.WriteLine($"Success: {result.Success}");
+Console.WriteLine($"Rooms placed: {result.PlacedRoomsCount}/{result.TotalRoomsCount}");
+```
+
 ## 🐛 Support
 
 Found a bug or have a feature request? Please report issues on our [GitHub Issues page](https://github.com/yourusername/Magnetizing_FloorPlanGenerator/issues).
