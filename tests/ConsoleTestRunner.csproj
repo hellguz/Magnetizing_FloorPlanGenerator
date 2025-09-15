@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="RhinoCommon">
       <HintPath>../libs/RhinoCommon.dll</HintPath>
       <Private>true</Private>
@@ -20,6 +24,10 @@
       <HintPath>../libs/GH_IO.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>../libs/clipper_library.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +35,25 @@
       <HintPath>../build/net48/Magnetizing_FPG.dll</HintPath>
       <Private>true</Private>
     </Reference>
+  </ItemGroup>
+
+  <!-- Copy native Rhino DLLs to output directory -->
+  <ItemGroup>
+    <None Include="C:\Program Files\Rhino 7\System\rhcommon_c.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files\Rhino 7\System\rhcommonrdk_c.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files\Rhino 7\Plug-ins\Grasshopper\GH_Util.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files\Rhino 7\System\Eto.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C:\Program Files\Rhino 7\System\Eto.Wpf.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

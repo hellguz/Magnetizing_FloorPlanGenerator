@@ -12,7 +12,9 @@
       "Bash(ls:*)",
       "Bash(echo $APPDATA)",
       "Bash(dotnet clean:*)",
-      "Bash(dotnet run:*)"
+      "Bash(dotnet run:*)",
+      "Read(//c/Program Files/Rhino 7/**)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": [],
