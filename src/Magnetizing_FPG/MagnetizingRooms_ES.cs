@@ -13,8 +13,9 @@ namespace Magnetizing_FPG
 {
     public class MagnetizingRooms_ES : GH_Component
     {
-
-        Random random = new Random();
+        // Random seed for deterministic results - defaults to current behavior
+        public int RandomSeed { get; set; } = Environment.TickCount;
+        Random random;
 
         List<RoomCells> roomCellsList = new List<RoomCells>();
         List<GridSolution> gridSolutionsCollection;
@@ -44,6 +45,8 @@ namespace Magnetizing_FPG
               "MagnetizingRooms_ES",
               "Magnetizing_FPG", "Magnetizing_FPG")
         {
+            // Initialize random with the seed
+            random = new Random(RandomSeed);
         }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace Magnetizing_FPG
             pManager.AddIntegerParameter("Iterations", "I", "Iterations counter. Generally value between 300-900 works best.", GH_ParamAccess.item, 3);
             pManager.AddNumberParameter("MaxAdjDistance", "MAD", "Max distance between 2 connected rooms. Generally 2-3 works best.", GH_ParamAccess.item, 2);
             pManager.AddNumberParameter("CellSize(m)", "CS(m)", "Resolution of grid in meters, 1m is used by default", GH_ParamAccess.item, 1);
+            pManager.AddIntegerParameter("RandomSeed", "RS", "Random seed for deterministic results. Same seed produces same layout.", GH_ParamAccess.item, Environment.TickCount);
         }
 
         /// <summary>
@@ -128,6 +132,12 @@ namespace Magnetizing_FPG
 
             DA.GetData("Iterations", ref iterations);
             DA.GetData("MaxAdjDistance", ref maxAdjDistance);
+            
+            // Get RandomSeed and reinitialize random for deterministic results
+            int inputSeed = RandomSeed;
+            DA.GetData("RandomSeed", ref inputSeed);
+            RandomSeed = inputSeed;
+            random = new Random(RandomSeed);
 
             // Let's deal with setting boundary curve. The curve is rotated so it fits best into rectangle. 
             // Then a workingGrid of cells (Breps) should be generated so it covers the whole boundary.

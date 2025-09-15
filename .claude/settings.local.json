@@ -8,7 +8,9 @@
       "Read(/C:\\Program Files\\Rhino 7/**)",
       "Bash(/dev/null)",
       "Bash(find:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(echo $APPDATA)"
     ],
     "deny": [],
     "ask": [],
