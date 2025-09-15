@@ -12,7 +12,7 @@ namespace Magnetizing_FPG
     public class MagnetizingSolver
     {
         // Algorithm state variables - moved from MagnetizingRooms_ES
-        private Random random = new Random();
+        private Random random;
         private List<RoomCells> roomCellsList = new List<RoomCells>();
         private List<GridSolution> gridSolutionsCollection;
 
@@ -28,6 +28,18 @@ namespace Magnetizing_FPG
         public SolverOutputs Execute(SolverInputs inputs)
         {
             var outputs = new SolverOutputs();
+
+            // Initialize random generator with seed
+            if (inputs.RandomSeed == 0)
+            {
+                // Use time-based seed for random behavior
+                random = new Random();
+            }
+            else
+            {
+                // Use provided seed for deterministic behavior
+                random = new Random(inputs.RandomSeed);
+            }
 
             // Extract inputs for easier access
             IHouseInstance houseInstance = inputs.HouseInstance;

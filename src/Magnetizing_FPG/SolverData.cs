@@ -34,6 +34,11 @@ namespace Magnetizing_FPG
         /// </summary>
         public double BoundaryOffset { get; set; }
 
+        /// <summary>
+        /// Random seed for reproducible results. Use 0 for random seed each execution.
+        /// </summary>
+        public int RandomSeed { get; set; } = 0;
+
         // Corridor generation settings
         /// <summary>
         /// Whether to generate corridors on one side of rooms.

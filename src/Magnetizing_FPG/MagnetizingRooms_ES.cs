@@ -52,6 +52,7 @@ namespace Magnetizing_FPG
             pManager.AddIntegerParameter("Iterations", "I", "Iterations counter. Generally value between 300-900 works best.", GH_ParamAccess.item, 3);
             pManager.AddNumberParameter("MaxAdjDistance", "MAD", "Max distance between 2 connected rooms. Generally 2-3 works best.", GH_ParamAccess.item, 2);
             pManager.AddNumberParameter("CellSize(m)", "CS(m)", "Resolution of grid in meters, 1m is used by default", GH_ParamAccess.item, 1);
+            pManager.AddIntegerParameter("Random Seed", "RS", "Random seed for reproducible results. 0 = random seed each update, any other number = fixed seed for testing", GH_ParamAccess.item, 0);
         }
 
         /// <summary>
@@ -84,14 +85,17 @@ namespace Magnetizing_FPG
             int iterations = 0;
             double maxAdjDistance = 0;
             double cellSize = 1;
+            int randomSeed = 0;
 
             DA.GetData("Iterations", ref iterations);
             DA.GetData("MaxAdjDistance", ref maxAdjDistance);
             DA.GetData("CellSize(m)", ref cellSize);
+            DA.GetData("Random Seed", ref randomSeed);
 
             inputs.Iterations = iterations;
             inputs.MaxAdjDistance = maxAdjDistance;
             inputs.CellSize = cellSize;
+            inputs.RandomSeed = randomSeed;
 
             // Set component settings
             inputs.BoundaryOffset = this.boundaryOffset;
