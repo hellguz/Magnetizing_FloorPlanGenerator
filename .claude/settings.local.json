@@ -10,7 +10,9 @@
       "Bash(find:*)",
       "Bash(mkdir:*)",
       "Bash(ls:*)",
-      "Bash(echo $APPDATA)"
+      "Bash(echo $APPDATA)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet run:*)"
     ],
     "deny": [],
     "ask": [],

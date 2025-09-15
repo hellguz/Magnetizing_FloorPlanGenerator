@@ -55,7 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="**/*.cs" />
+    <Compile Include="*.cs" />
+    <Compile Include="Magnetizing_FPG\**\*.cs" />
+    <Compile Include="Properties\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

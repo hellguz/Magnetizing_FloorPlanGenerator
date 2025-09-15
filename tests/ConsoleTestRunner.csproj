@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>FloorPlanGeneratorTests</AssemblyName>
+    <RootNamespace>FloorPlanGeneratorTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="RhinoCommon">
+      <HintPath>../libs/RhinoCommon.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <HintPath>../libs/Grasshopper.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="GH_IO">
+      <HintPath>../libs/GH_IO.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Magnetizing_FPG">
+      <HintPath>../build/net48/Magnetizing_FPG.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
