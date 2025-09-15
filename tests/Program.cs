@@ -12,6 +12,9 @@ namespace Magnetizing_FPG.Tests
 
             try
             {
+                // Setup Rhino environment path
+                SetupRhinoEnvironment();
+
                 Console.WriteLine("Running basic algorithm structure tests...\n");
 
                 // Run simple tests that don't require Rhino environment
@@ -38,6 +41,31 @@ namespace Magnetizing_FPG.Tests
             catch
             {
                 // Ignore if running in environment without console input
+            }
+        }
+
+        private static void SetupRhinoEnvironment()
+        {
+            try
+            {
+                // Add Rhino installation path to the PATH environment variable
+                string rhinoPath = @"C:\Program Files\Rhino 7\System";
+                string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
+
+                if (!currentPath.Contains(rhinoPath))
+                {
+                    string newPath = rhinoPath + ";" + currentPath;
+                    Environment.SetEnvironmentVariable("PATH", newPath);
+                    Console.WriteLine("🔧 Added Rhino path to environment");
+                }
+
+                // Also try setting RHINO_PATH explicitly
+                Environment.SetEnvironmentVariable("RHINO_PATH", rhinoPath);
+                Console.WriteLine("🔧 Set RHINO_PATH environment variable");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️  Warning: Could not setup Rhino environment: {ex.Message}");
             }
         }
     }

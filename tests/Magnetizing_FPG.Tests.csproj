@@ -11,6 +11,7 @@
     <ProjectReference Include="..\src\Magnetizing_FPG.csproj" />
   </ItemGroup>
 
+
   <ItemGroup>
     <Reference Include="RhinoCommon">
       <HintPath>..\libs\RhinoCommon.dll</HintPath>
@@ -29,8 +30,23 @@
   <Target Name="CopyDependencies" AfterTargets="Build">
     <ItemGroup>
       <LibrariesToCopy Include="..\libs\*.dll" />
+      <!-- Copy essential native Rhino libraries -->
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\rhcommon_c.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\RhinoCore.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\opennurbs.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\Rhino_DotNet.dll" />
+      <!-- Copy additional dependencies for geometry operations -->
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\RhinoLibrary.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\freetype263.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\tl.dll" />
+      <!-- Copy Visual C++ Runtime dependencies -->
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\boost_chrono-mt-x64-v142.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\boost_filesystem-mt-x64-v142.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\boost_system-mt-x64-v142.dll" />
+      <RhinoNativeLibs Include="C:\Program Files\Rhino 7\System\boost_thread-mt-x64-v142.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(LibrariesToCopy)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(RhinoNativeLibs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

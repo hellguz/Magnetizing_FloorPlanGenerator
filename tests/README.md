@@ -10,11 +10,20 @@ This test suite verifies the core functionality of the magnetizing floor plan ge
 1. **Seed Determinism**: Verifies that the same random seed produces consistent behavior
 2. **Input Validation**: Tests that input structures can be created and configured correctly
 3. **Algorithm Structure**: Verifies that solver classes can be instantiated properly
+4. **RhinoCommon Initialization**: Tests basic Rhino geometry objects (Point3d, Vector3d) work
+5. **Core Algorithm Logic**: Tests algorithm helper methods (GridContains, MissingRoomAdjacences)
 
 ### ⚠️ **Limitations**
-- **Geometry Tests**: Full end-to-end tests with actual floor plan generation require Rhino environment
+- **Complex Geometry**: Rhino's geometry engine can't fully initialize outside Rhino installation
+- **Full E2E Tests**: Complete floor plan generation requires Rhino environment
 - **Visual Results**: Cannot verify visual outputs without Rhino's geometry engine
 - **Complete Workflows**: Real-world testing should be done within Grasshopper
+
+### 🔧 **Rhino Dependencies**
+The test project automatically copies essential Rhino native libraries:
+- `rhcommon_c.dll`, `RhinoCore.dll`, `opennurbs.dll`, `Rhino_DotNet.dll`
+- Additional dependencies for geometry operations
+- Sets up PATH environment to find Rhino installation
 
 ## How to Run Tests
 
@@ -42,14 +51,20 @@ tests\bin\Release\net48\Magnetizing_FPG.Tests.exe
 🔬 Magnetizing Floor Plan Generator - End-to-End Tests
 ======================================================
 
+🔧 Added Rhino path to environment
+🔧 Set RHINO_PATH environment variable
+Running basic algorithm structure tests...
+
 🧪 Basic Algorithm Tests (No Rhino Dependencies)
 ===============================================
 
 ✅ Test 1: Seed Determinism - PASSED
 ✅ Test 2: Input Validation - PASSED
 ✅ Test 3: Algorithm Structure - PASSED
+✅ Test 4: RhinoCommon Initialization - PASSED
+✅ Test 5: Core Algorithm Logic - PASSED
 
-📊 Results: 3/3 tests passed
+📊 Results: 5/5 tests passed
 🎉 All basic tests passed!
 💡 Note: Full geometry tests require Rhino environment.
 ```
@@ -73,6 +88,18 @@ tests\bin\Release\net48\Magnetizing_FPG.Tests.exe
 - Creates `SolverOutputs` structure
 - Verifies basic object creation succeeds
 - **Purpose**: Confirms that algorithm classes are properly structured
+
+### RhinoCommon Initialization Test
+- Tests basic Rhino geometry objects (Point3d, Vector3d) can be created
+- Attempts simple curve operations (limited by geometry engine initialization)
+- Sets up Rhino environment paths for native library loading
+- **Purpose**: Verifies that RhinoCommon loads and basic objects work
+
+### Core Algorithm Logic Test
+- Tests `GridContains` method with sample grids
+- Tests `MissingRoomAdjacences` calculation logic
+- Verifies algorithm helper methods work independently
+- **Purpose**: Tests core algorithmic logic without geometry dependencies
 
 ## Test Data
 

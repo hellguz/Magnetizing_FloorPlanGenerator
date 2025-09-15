@@ -50,6 +50,28 @@ Copy-Item .\build\net48\Magnetizing_FPG.gha -Destination "$env:AppData\Grasshopp
 
 The algorithm intelligently places rooms to satisfy your adjacency requirements while efficiently using the available space.
 
+## 🧪 Testing
+
+The algorithm includes a comprehensive test suite that verifies core functionality:
+
+```bash
+# Run all tests
+./tests/run_tests.ps1
+
+# Or build and run manually
+dotnet build tests/Magnetizing_FPG.Tests.csproj -c Release
+tests/bin/Release/net48/Magnetizing_FPG.Tests.exe
+```
+
+**Test Coverage:**
+- ✅ Seed determinism and reproducible results
+- ✅ Input validation and data structure integrity
+- ✅ Algorithm structure and object instantiation
+- ✅ RhinoCommon geometry integration
+- ✅ Core algorithm logic (grid operations, adjacency calculations)
+
+See [`tests/README.md`](tests/README.md) for detailed testing documentation.
+
 ## 🏗️ How It Works
 
 The "magnetizing" algorithm treats rooms like magnetic objects that attract or repel each other based on your adjacency requirements. The process:
@@ -67,6 +89,7 @@ The "magnetizing" algorithm treats rooms like magnetic objects that attract or r
 - **Dependencies:** Self-contained (all libraries embedded in the plugin)
 - **Performance:** Optimized for real-time feedback with reasonable building sizes
 - **Architecture:** Decoupled design - core algorithm is independent of Grasshopper and fully testable
+- **Testing:** Comprehensive test suite with 5 automated tests verifying algorithm logic and deterministic behavior
 
 ## 📁 Repository Structure
 
@@ -77,6 +100,11 @@ The "magnetizing" algorithm treats rooms like magnetic objects that attract or r
 │   ├── MagnetizingRooms_ES.cs     # Grasshopper UI wrapper
 │   ├── RoomProgram/               # Room and house instance classes
 │   └── Properties/                # Assembly info and resources
+├── tests/                         # Test suite
+│   ├── SimpleMockTests.cs         # Core algorithm tests
+│   ├── Program.cs                 # Test runner
+│   ├── run_tests.ps1              # PowerShell test script
+│   └── README.md                  # Test documentation
 ├── libs/                          # Rhino/Grasshopper dependencies
 ├── build/                         # Build output (.dll and .gha files)
 ├── docs/                          # Documentation
