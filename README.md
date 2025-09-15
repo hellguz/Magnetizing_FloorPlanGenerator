@@ -66,17 +66,22 @@ The "magnetizing" algorithm treats rooms like magnetic objects that attract or r
 - **Framework:** .NET Framework 4.8 *(chosen for maximum compatibility - no additional runtime downloads required)*
 - **Dependencies:** Self-contained (all libraries embedded in the plugin)
 - **Performance:** Optimized for real-time feedback with reasonable building sizes
+- **Architecture:** Decoupled design - core algorithm is independent of Grasshopper and fully testable
 
 ## 📁 Repository Structure
 
 ```
-├── src/                    # Source code
-│   ├── MagnetizingRooms_ES.cs     # Main algorithm implementation
+├── src/                           # Source code
+│   ├── MagnetizingSolver.cs       # Core algorithm (pure C#, testable)
+│   ├── SolverData.cs              # Input/output data contracts
+│   ├── MagnetizingRooms_ES.cs     # Grasshopper UI wrapper
 │   ├── RoomProgram/               # Room and house instance classes
 │   └── Properties/                # Assembly info and resources
-├── libs/                  # Rhino/Grasshopper dependencies  
-├── build/                 # Build output (.dll and .gha files)
-└── README.md             # This file
+├── libs/                          # Rhino/Grasshopper dependencies
+├── build/                         # Build output (.dll and .gha files)
+├── docs/                          # Documentation
+│   └── refactoring-magnetizing-algorithm.md
+└── README.md                      # This file
 ```
 
 ## 👥 Authors & Contributors
