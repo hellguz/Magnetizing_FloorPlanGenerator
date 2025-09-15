@@ -33,7 +33,7 @@ That's it! No additional downloads needed - the plugin works with the .NET Frame
 git clone https://github.com/yourusername/Magnetizing_FloorPlanGenerator.git
 cd Magnetizing_FloorPlanGenerator
 dotnet build -c Release
-copy build\net48\Magnetizing_FPG.gha "%AppData%\Grasshopper\Libraries\"
+Copy-Item .\build\net48\Magnetizing_FPG.gha -Destination "$env:AppData\Grasshopper\Libraries" -Force
 ```
 
 ## 🚀 How to Use

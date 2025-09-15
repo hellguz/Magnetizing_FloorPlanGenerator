@@ -83,7 +83,7 @@ libs/temp/
 *.vbw
 
 # Development tools
-.gpt/
+.gpt/*.txt
 .claude/
 
 # OS files
